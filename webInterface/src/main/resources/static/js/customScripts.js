@@ -139,19 +139,7 @@ function createNewQRCode() {
         var uri = "http://localhost:8090/createQRCode/" + qrPlainText + "/" + qrTag + "/" + selectedEccLevel;
         sendData(uri,"GET","createNewQRCodeModalBody","New QR code has been created!",'Operation failed!','Operation failed!');
         document.getElementById('textToEncode').value = "";
-        document.getElementById('qrTag').value = "";
-        /*
-        $.get(uri, {},
-            function (data, status) {
-                //console.log(data+"  "+status);
-                if (status == "success") {
-                    notifySuccess(document.getElementById("createNewQRCodeModalBody"), "QR Code was created successfully. Status: " + status);
-                    document.getElementById('textToEncode').value = "";
-                    document.getElementById('qrTag').value = "";
-                }
-
-            });
-            */
+        document.getElementById('qrTag').value = "";        
     }
     
     setTimeout(function () {
@@ -289,8 +277,7 @@ function getOriginalTableData() {
 
 }
 
-function assignMobileUserToQRCode(mobileUserName, qrCodeId,element){   
-    
+function assignMobileUserToQRCode(mobileUserName, qrCodeId,element){       
     var assigned = element.checked;
     console.log(mobileUserName);
     console.log(qrCodeId);
@@ -306,8 +293,12 @@ function assignMobileUserToQRCode(mobileUserName, qrCodeId,element){
     if(!assigned){
         var uri2 = "http://localhost:8081/deleteQrToMobileUser/"+mobileUserName+"/"+qrCodeId;
         sendData(uri2,"POST","manageQRCodesModal","QR code unassigned!",'Operation failed!','Operation failed!');
-    }        
-    
+    }
+    if(element.name=="mobileUserRC"){       
+    setTimeout(function () {
+        window.location.reload();
+    }, 2000);
+    }
 }
 
 function deleteExistingQRCodes(qrDataId, element){

@@ -174,8 +174,8 @@
                   </button>
                   <ul class="dropdown-menu">
                     <li th:each="mobileUser:${mobileUsersList}">
-                      <input type="checkbox" name="mobileUser" value="mobileUserId" th:checked="${#lists.contains(qrCodeData.assignedUsers, mobileUser.mobileUsername)}" th:attr="onclick=|assignMobileUserToQRCode('${mobileUser.mobileUsername}','${qrCodeData.qrDataId}',this)|">
-                      <label for="mobileUser" th:text="${mobileUser.mobileUserId}+' '+${mobileUser.firstName}+' '+${mobileUser.lastName}"> </label>
+                      <input type="checkbox" name="mobileUserRC" value="mobileUserId" th:checked="${#lists.contains(qrCodeData.assignedUsers, mobileUser.mobileUsername)}" th:attr="onclick=|assignMobileUserToQRCode('${mobileUser.mobileUsername}','${qrCodeData.qrDataId}',this)|">
+                      <label for="mobileUserRC" th:text="${mobileUser.mobileUserId}+' '+${mobileUser.firstName}+' '+${mobileUser.lastName}"> </label>
                     </li>
                   </ul>
                 </div>
@@ -213,7 +213,7 @@
             <tbody id="existingQRCodesTableBody">
               <tr class="modalTable" th:each="qrData:${qrDataList}">
                 <td class="modalTable">
-                  <img class="mb-4" th:src="@{'http://localhost:8000/QRCodeImages/' + ${qrData.imageURL}}" width="30px" height="30px"  alt="..." />
+                  <img class="mb-4" th:src="@{'http://localhost:8000/images/' + ${qrData.imageURL}}" width="30px" height="30px"  alt="..." />
                 </td>
                 <td class="modalTable" th:text="${qrData.qrDataId}"></td>
                 <td class="modalTable" contenteditable th:text="${qrData.qrDataTag}" ></td>
@@ -229,7 +229,7 @@
                   <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" >Assign code</button>
                   <ul class="dropdown-menu">
                     <li th:each="mobileUser:${mobileUsersList}">
-                      <input type="checkbox" name="mobileUser" value="mobileUserId" th:checked="${#lists.contains(qrData.assignedUsers, mobileUser.mobileUsername)}" th:attr="onclick=|assignMobileUserToQRCode('${mobileUser.mobileUsername}','${qrData.qrDataId}',this)|">
+                      <input type="checkbox" id="recentlyCreated" name="mobileUser" value="mobileUserId" th:checked="${#lists.contains(qrData.assignedUsers, mobileUser.mobileUsername)}" th:attr="onclick=|assignMobileUserToQRCode('${mobileUser.mobileUsername}','${qrData.qrDataId}',this)|">
                       <label for="mobileUser" th:text="${mobileUser.mobileUserId}+' '+${mobileUser.firstName}+' '+${mobileUser.lastName}"> </label>
                     </li>
 

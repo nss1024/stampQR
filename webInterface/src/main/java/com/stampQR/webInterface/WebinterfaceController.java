@@ -7,7 +7,9 @@ import com.stampQR.webInterface.helperClasses.QRAssignments;
 import com.stampQR.webInterface.helperClasses.UserDetailsWeb;
 import com.stampQR.webInterface.resources.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -256,6 +258,14 @@ public class WebinterfaceController {
                 }
             }
         }
+        // set assigned users for the latest created qr data as well
+        for (QRData ltqrData:lastThreeCreated) {
+            for (QRData qrData:qrDataList.getQrDataList()){
+                if(qrData.getQrDataId().equals(ltqrData.getQrDataId())){
+                    ltqrData.setAssignedUsers(qrData.getAssignedUsers());
+                }
+            }
+        }
 
         model.addAttribute("latestQRCodesList",lastThreeCreated);
         model.addAttribute("qrDataList",qrDataList.getQrDataList());
@@ -269,14 +279,16 @@ public class WebinterfaceController {
     }
     @ResponseBody()
     @GetMapping(value = "/createQRCode/{plainText}/{tag}/{errorCorrectionLevel}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void createQRCode(@PathVariable("plainText") String plainText,@PathVariable("tag")  String tag,@PathVariable("errorCorrectionLevel")  String eccLevel){
+    public ResponseEntity createQRCode(@PathVariable("plainText") String plainText, @PathVariable("tag")  String tag, @PathVariable("errorCorrectionLevel")  String eccLevel){
 
 
         String uri = "http://localhost:8070/qrdata/"+plainText+"/"+eccLevel+"/"+tag+"/"+userId;
-
-
-            restTemplate.getForObject(uri, String.class);
-
+            try {
+                restTemplate.getForObject(uri, String.class);
+                return new ResponseEntity(HttpStatus.OK);
+            }catch (Exception e){
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
     }
 
 
