@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>stampQR - User</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
+  <!--Javascript-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+  <!--JQuerry-->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="http://localhost:8081" defer></script>
+  <!--Custom CSS-->
+  <link href="css/customStyles.css" rel="stylesheet" />
+</head>
+
+<body class="d-flex flex-column h-100">
+  <script src="js/customScripts.js" defer></script>
+
+  <main class="flex-shrink-0">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container px-5">
+        <a class="navbar-brand" th:href="@{home}">stampQR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" th:href="@{home}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{login}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
+
+          </ul>
+          </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section id="stampQRStatusMessageSection" class="text-center">
+      <div id="statusMessageContainer" th:each="statusMessage:${webStatusMessages}">
+
+        <div class="alert alert-info" role="alert" >
+          <h5 th:text="${statusMessage.statusMessage}"></h5>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- Mobile user management-->
+    <section class="py-5" id="features">
+      <div class="container px-5 my-5">
+        <div class="container px-5 my-5">
+          <div class="row justify-content-center">
+            <div class="col-lg-16 col-xxl-12">
+              <div class="text-center my-5">
+                <h1 class="fw-bolder mb-3">Users</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-16">
+          <div class="row gx-4 row-cols-1 row-cols-md-2">
+            <!--Card 1 -->
+            <div class="col mb-5 mb-md-0 h-100 text-center my-5" data-bs-toggle="modal"
+              data-bs-target="#newMobileUserModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
+              <h2 class="h5">Create new mobile user</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+            <!--Card 1 End -->
+            <!--Card 2 -->
+            <div class="col mb-5 mb-md-0 h-100 text-center my-5" data-bs-toggle="modal"
+              data-bs-target="#manageMobileUserModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-person-circle"></i>
+              </div>
+              <h2 class="h5">Manage mobile users </h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+            <!--Card 2 End -->
+            <!--Card 3 -->
+            <div class="col mb-5 h-100 text-center my-5" data-bs-toggle="modal" data-bs-target="#manageMyDetailsModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-qr-code-scan"></i>
+              </div>
+              <h2 class="h5">Manage my details</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+            <!--Card 3 End -->
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!--  QR Code management-->
+    <section class="py-5" id="features">
+      <div class="container px-5 my-5">
+        <div class="container px-5 my-5">
+          <div class="row justify-content-center">
+            <div class="col-lg-16 col-xxl-12">
+              <div class="text-center my-5">
+                <h1 class="fw-bolder mb-3">Manage OR Codes</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-16">
+          <div class="row gx-4 row-cols-1 row-cols-md-2">
+            <div class="col mb-5 h-100 text-center my-5">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-qr-code"></i></div>
+              <h2 class="h5">Create new QR Code</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+              <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+                data-bs-target="#newQRCodeModal">
+                Create new QR Code
+              </button>
+            </div>
+            <div class="col mb-5 h-100 text-center my-5">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-qr-code-scan"></i>
+              </div>
+              <h2 class="h5">Manage Existing QR Codes </h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+              <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+                data-bs-target="#updateQRCodesModal">
+                Manage existing codes
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- Recently created-->
+    <section class="py-5">
+      <div class="container px-5 my-5">
+        <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-6">
+            <div class="text-center">
+              <h2 class="fw-bolder">Recently created</h2>
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="row gx-5 jus">
+          <div class="col-lg-4 mb-5" th:each="qrCodeData:${latestQRCodesList}" >
+            <div class="card h-100 shadow border-0">
+              <div class="text-center">
+              <img class="mb-4" th:src="@{'http://localhost:8000/images/' + ${qrCodeData.imageURL}}" width="100px" height="100px"  alt="..." />
+              </div>
+              <div class="card-body p-4">
+                <h5 class="card-title"  th:text="${qrCodeData.qrDataTag}">Card title</h5>
+                <p class="card-text" th:text="${qrCodeData.plainText}">Some quick example text to build on the card title and make up the bulk of the
+                  card's content.</p>
+                <div class="dropdown">
+                  <button type="button" class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                    Assigned to
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li th:each="mobileUser:${mobileUsersList}">
+                      <input type="checkbox" name="mobileUser" value="mobileUserId" th:checked="${#lists.contains(qrCodeData.assignedUsers, mobileUser.mobileUsername)}" th:attr="onclick=|assignMobileUserToQRCode('${mobileUser.mobileUsername}','${qrCodeData.qrDataId}',this)|">
+                      <label for="mobileUser" th:text="${mobileUser.mobileUserId}+' '+${mobileUser.firstName}+' '+${mobileUser.lastName}"> </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <!--Modal -- Manage Existing QR Codes -->
+  <div class="modal fade" id="updateQRCodesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Manage existing QR Codes</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body " id="manageQRCodesModal" >
+          <div class="text-center">
+          <h5>Update exiting QR Codes Modal</h5>
+          <table class="modalTable " id="existingQRCodesTable">
+            <thead id="existingQRCodesTableHead">
+              <tr class="modalTable">
+                <th class="modalTable">Image</th>
+                <th class="modalTable">Id</th>
+                <th class="modalTable">Tag</th>
+                <th class="modalTable">Plain Text</th>
+                <th class="modalTable">Error Correction Level</th>
+                <th class="modalTable">Code Active</th>
+                
+              </tr>
+            </thead>
+            <tbody id="existingQRCodesTableBody">
+              <tr class="modalTable" th:each="qrData:${qrDataList}">
+                <td class="modalTable">
+                  <img class="mb-4" th:src="@{'http://localhost:8000/QRCodeImages/' + ${qrData.imageURL}}" width="30px" height="30px"  alt="..." />
+                </td>
+                <td class="modalTable" th:text="${qrData.qrDataId}"></td>
+                <td class="modalTable" contenteditable th:text="${qrData.qrDataTag}" ></td>
+                <td class="modalTable" th:text="${qrData.plainText}" ></td>
+                <td class="modalTable" th:text="${qrData.errorCorrectionLevel}" ></td>
+                <td class="modalTable">
+                  <input type="checkbox" th:id="'mobileUserActive' + ${qrData.active}" name="qrDataActive" value="True" th:attr="onclick=|changeQRCodeActiveStatus('${qrData.qrDataId}', this)|" th:checked="${qrData.active}">
+                </td>
+                <td class="modalTable" >
+                  <button type="button" class="btn btn-danger" th:attr="onclick=|deleteExistingQRCodes('${qrData.qrDataId}',this)|">Delete</button>
+                </td>
+                <td class="modalTable" >
+                  <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" >Assign code</button>
+                  <ul class="dropdown-menu">
+                    <li th:each="mobileUser:${mobileUsersList}">
+                      <input type="checkbox" name="mobileUser" value="mobileUserId" th:checked="${#lists.contains(qrData.assignedUsers, mobileUser.mobileUsername)}" th:attr="onclick=|assignMobileUserToQRCode('${mobileUser.mobileUsername}','${qrData.qrDataId}',this)|">
+                      <label for="mobileUser" th:text="${mobileUser.mobileUserId}+' '+${mobileUser.firstName}+' '+${mobileUser.lastName}"> </label>
+                    </li>
+
+                  </ul>
+                </td>
+              </tr>              
+            </tbody>
+          </table>
+        </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="createNewStatusMessageBtn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- New Mobile User Modal -->
+  <div class="modal fade" id="newMobileUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create new mobile user</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modalInnerClass">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">                
+                <div class="col-md-8">
+                  <div class="card-body" id="newMobileUserCardBody">
+                    
+                    <label for="newMobileUserUsername">Username:</label><br>
+                    <input type="text" id="newMobileUserUsername" name="newMobileUserUsername" required><br>
+                    <label for="newMobileUserPassword">Password:</label><br>
+                    <input type="text" id="newMobileUserPassword" name="newMobileUserPassword" required><br>
+                    <label for="newMobileUserActive"> User Status Active</label><br>
+                    <input type="checkbox" id="newMobileUserActive" name="newMobileUserActive" checked="true" required><br>
+                    <label for="newMobileUserFName">First Name:</label><br>
+                    <input type="text" id="newMobileUserFName" name="newMobileUserFName" required><br>
+                    <label for="newMobileUserLName">Last Name:</label><br>
+                    <input type="text" id="newMobileUserLName" name="newMobileUserLName" required><br>
+                    <label for="newMobileUserEmail">Email:</label><br>
+                    <input type="text" id="newMobileUserEmail" name="newMobileUserEmail" required><br>
+                    <label for="newMobileUserCompany">Company:</label><br>
+                    <input type="text" id="newMobileUserCompany" name="newMobileUserCompany" required><br>                    
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveNewMobileUserBtn" th:attr="onclick=|createNewMobileUser('${userId}')|" >Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- New QR Code  -->
+  <div class="modal fade" id="newQRCodeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New QR Code</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="createNewQRCodeModalBody">
+          <h5>Create a new QR code </h5>
+          
+          <label for="textToEncode">Text to encode :</label><br>
+          <textarea id="textToEncode" name="plainText" rows="4" cols="50" required style="resize: none;" placeholder="Please enter 1+ characters!"></textarea><br>
+          <label for="qrTag">QR Code Name :</label><br>
+          <input type="text" id="qrTag" name="qrTag" required placeholder="Please enter 3+ characters!"><br><br>
+
+          <p> Error Correction Level :</p>
+          <input type="radio" id="low" name="errorCorrectionLevelRadio" value="L" checked required>
+          <label for="low">Low (7 %)</label><br>
+          <input type="radio" id="medium" name="errorCorrectionLevelRadio" value="M">
+          <label for="medium">Medium (15 %)</label><br>
+          <input type="radio" id="quartile" name="errorCorrectionLevelRadio" value="Q">
+          <label for="quartile">Quartile (25 %)</label><br>
+          <input type="radio" id="high" name="errorCorrectionLevelRadio" value="H">
+          <label for="high">High (30 %)</label>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="createNewQRCode()">Save </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- Manage Mobile users  -->
+  <div class="modal fade bd-example-modal-lg" id="manageMobileUserModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" onmouseover="getOriginalTableData(); this.onmouseover=null;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Manage mobile users</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="manageMobileUsersModayBody">
+          <h5>Manage mobile users modal</h5>
+          <table class="modalTable" id="mobileUsersTable">
+            <thead id="mobileUsersTableHead">
+              <tr class="modalTable">
+                <th class="modalTable">Username</th>
+                <th class="modalTable">User Id</th>
+                <th class="modalTable">First Name</th>
+                <th class="modalTable">Last Name</th>
+                <th class="modalTable">Email</th>
+                <th class="modalTable">Company</th>
+                <th class="modalTable">Account active</th>
+              </tr>
+            </thead>
+            <tbody id="mobileUsersTableBody">
+              <tr class="modalTable" th:each="mobileUser:${mobileUsersList}">
+                <td class="modalTable" th:text="${mobileUser.mobileUsername}">jDoe1</td>
+                <td class="modalTable" th:text="${mobileUser.mobileUserId}">1</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.firstName}" onkeydown="setElementbackgrounfColor(this)">John</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.lastName}" onkeydown="setElementbackgrounfColor(this)">Doe</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.email}" onkeydown="setElementbackgrounfColor(this)">jDoe@somecompany.com</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.company}" onkeydown="setElementbackgrounfColor(this)">Some Company</td>
+                <td class="modalTable">
+                  <input type="checkbox" th:id="'mobileUserActive' + ${mobileUser.mobileUserId}" name="mobileUserActive" value="True" th:checked="${mobileUser.userActive}">
+                    </td>
+              </tr>              
+            </tbody>
+          </table>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateMobileUsersBtn" onclick="updateMobileUsersData()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- Manage my details  -->
+  <div class="modal fade" id="manageMyDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Manage my details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="userDetailsCardBody">
+          
+          <h5>Manage my details modal</h5>
+          <label for="updatedUserUsername">Username:</label><br>
+          <input type="text" id="updatedUserUsername" name="updatedUserUsername" th:value="${userDetails.username}" readonly><br>
+          <label for="updatedUserPassword">Password:</label><br>
+          <input type="password" id="updatedUserPassword" name="updatedUserPassword" placeholder="password"><br>
+          <label for="updatedUserFName">First Name:</label><br>
+          <input type="text" id="updatedUserFName" name="updatedUserFName" th:value="${userDetails.firstName}"><br>
+          <label for="updatedUserLName">Last Name:</label><br>
+          <input type="text" id="updatedUserLName" name="updatedUserLName" th:value="${userDetails.lastName}"><br>
+          <label for="updatedUserEmail">Email:</label><br>
+          <input type="text" id="updatedUserEmail" name="updatedUserEmail" th:value="${userDetails.email}"><br>
+          <label for="updatedUserCompany">Company:</label><br>
+          <input type="text" id="updatedUserCompany" name="updatedUserCompany" th:value="${userDetails.company}"><br>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateUserDetailsSaveBtn" th:attr="onclick=|updateUserDetails('${userDetails.userId}','${userDetails.firstName}','${userDetails.lastName}','${userDetails.email}','${userDetails.company}')|">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Footer-->
+  <footer class="bg-dark py-4 mt-auto">
+    <div class="container px-5">
+      <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+        <div class="col-auto">
+          <div class="small m-0 text-white">Copyright &copy; StampQR 2023</div>
+        </div>
+        <div class="col-auto">
+          <a class="link-light small" href="#!">Privacy</a>
+          <span class="text-white mx-1">&middot;</span>
+          <a class="link-light small" href="#!">Terms</a>
+          <span class="text-white mx-1">&middot;</span>
+          <a class="link-light small" href="#!">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function createNewStatusMessage() {
+      var statusTitle = document.getElementById("statusTitle").value;
+      var statusMessage = document.getElementById("statusMessage").value;
+      var statusActive = document.getElementById("statusActive").value;
+      console.log("http://localhost:8081//websiteStatus/createNewStatusMessage/" + statusTitle + "/" + statusMessage + "/" + statusActive);
+
+      $.get("http://localhost:8081//websiteStatus/createNewStatusMessage/Status2/Status2msg/true", {},
+        function () {
+          alert("New status message created!");
+        });
+
+
+    }
+  </script>
+
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="js/scripts.js"></script>
+</body>
+
+</html>

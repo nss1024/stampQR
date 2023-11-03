@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>stampQR - Admin</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
+  <!--Javascript-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+  <!--JQuerry-->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="http://localhost:8081"></script>
+  <!--Custom CSS-->
+  <link href="css/customStyles.css" rel="stylesheet" />
+
+</head>
+
+<body class="d-flex flex-column h-100">
+  <script src="js/customScripts_Admin.js" defer></script>
+  <main class="flex-shrink-0">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container px-5">
+        <a class="navbar-brand" th:href="@{home}">stampQR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" th:href="@{home}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{login}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
+
+          </ul>
+          </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Status messages-->
+    <section id="stampQRStatusMessageSection" class="text-center">
+      <div id="statusMessageContainer" th:each="statusMessage:${activeWebStatusMessages}">
+
+        <div class="alert alert-info" role="alert">
+          <h5 th:text="${statusMessage.statusMessage}"></h5>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- Customer and user management-->
+    <section class="py-5" id="features">
+      <div class="container px-5 my-5">
+        <div class="container px-5 my-5">
+          <div class="row justify-content-center">
+            <div class="col-lg-16 col-xxl-12">
+              <div class="text-center my-5">
+                <h1 class="fw-bolder mb-3">Customers</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-16">
+          <div class="row gx-4 row-cols-1 row-cols-md-2">
+            <div class="col mb-5 h-100 text-center my-5" data-bs-toggle="modal" data-bs-target="#newCustomerModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-person-plus"></i>
+              </div>
+              <h2 class="h5">Add new customer</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+            <div class="col mb-5 h-100 text-center my-5" data-bs-toggle="modal" data-bs-target="#manageCustomersModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-pencil-square"></i>
+              </div>
+              <h2 class="h5">Edit customer details</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+            <div class="col mb-5 mb-md-0 h-100 text-center my-5" data-bs-toggle="modal"
+              data-bs-target="#newMobileUserModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
+              <h2 class="h5">Add new mobile user</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+            <div class="col h-100 text-center my-5" data-bs-toggle="modal" data-bs-target="#manageMobileUserModal">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-person-circle"></i>
+              </div>
+              <h2 class="h5">Edit mobile user details</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- Website management-->
+    <section class="py-5" id="features">
+      <div class="container px-5 my-5">
+        <div class="container px-5 my-5">
+          <div class="row justify-content-center">
+            <div class="col-lg-16 col-xxl-12">
+              <div class="text-center my-5">
+                <h1 class="fw-bolder mb-3">Manage website</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-16">
+          <div class="row gx-4 row-cols-1 row-cols-md-2">
+            <div class="col mb-5 h-100 text-center my-5">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-globe2"></i></div>
+              <h2 class="h5">Manage web content</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+              <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                  Options
+                </button>
+                <ul class="dropdown-menu w-100">
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newWebContentModal">Add web
+                      content</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateWebContentModal">Update web
+                      content</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newCardModal">Add new
+                      card</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateCardModal">Update
+                      card</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col mb-5 h-100 text-center my-5">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
+                  class="bi bi-chat-square-text"></i>
+              </div>
+              <h2 class="h5">Manage Status messages</h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+              <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                  Options
+                </button>
+                <ul class="dropdown-menu w-100">
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newStatusMessageModal">Add new
+                      status message</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStatusMessageModal">Update
+                      status message</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col mb-5 h-100 text-center my-5">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i
+                  class="bi bi-question-square-fill"></i>
+              </div>
+              <h2 class="h5">Manage FAQ </h2>
+              <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more
+                text.</p>
+              <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
+                  Options
+                </button>
+                <ul class="dropdown-menu w-100">
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#newFaqModal">Add new
+                      FAQ</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateFAQModal">Update
+                      FAQ</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    
+    
+  </main>
+  <!--######################################################################################################################################################################-->
+  <!--#####################################                                    Status messages                                        ######################################-->
+  <!--######################################################################################################################################################################-->
+  <!--Modal -- New Status message -->
+  <div class="modal fade" id="newStatusMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new status message</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="newStatusMessageModalBody">
+          <h5>New status message modal</h5>
+
+          <label for="newStatusTitle">Status Title:</label><br>
+          <input type="text" id="newStatusTitle" name="fname"><br>
+          <label for="newStatusMessage">Status Message:</label><br>
+          <input type="text" id="newStatusMessage" name="fname"><br>
+          <label for="newStatusActive"> Status Message Active</label><br>
+          <input type="checkbox" id="newStatusActive" name="statusActive" value="true"><br>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="createNewStatusMessageBtn"
+            onclick="createNewStatusMessage()">Create status message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- Update Status message -->
+  <div class="modal fade" id="updateStatusMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update a status message</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="updateStatusMsgModalBody">
+          <table class="modalTable" id="updateStatusMessagesTable">
+            <thead>
+              <tr class="modalTable">
+                <th class="modalTable">Id</th>
+                <th class="modalTable">Title</th>
+                <th class="modalTable">Message</th>
+                <th class="modalTable">Active</th>
+                <th class="modalTable">
+
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="modalTable" th:each="statusMessage:${allWebStatusMessages}">
+                <td class="modalTable" th:text="${statusMessage.id}">1</td>
+                <td class="modalTable" th:text="${statusMessage.statusTitle}" contenteditable="true"
+                  onkeydown="collectUpdatedStatusMsgData(this); this.onkeydown=null;">My status title</td>
+                <td class="modalTable" th:text="${statusMessage.statusMessage}" contenteditable="true"
+                  onkeydown="collectUpdatedStatusMsgData(this); this.onkeydown=null;">My status message</td>
+                <td class="modalTable">
+
+                  <input type="checkbox" th:id="'mobileUserActive' + ${statusMessage.id}" name="statusActive"
+                    value="True" th:checked="${statusMessage.statusActive}" onclick="collectUpdatedStatusMsgData(this)">
+
+                </td>
+                <td class="modalTable">
+                  <button type="button" class="btn btn-danger"
+                    th:attr="onclick=|deleteStatusMessage('${statusMessage.id}',this)|">Delete</button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="updateStatusMsgData()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--######################################################################################################################################################################-->
+  <!--#####################################                                     Web Content                                           ######################################-->
+  <!--######################################################################################################################################################################-->
+  <!--Modal -- New Web content  -->
+  <div class="modal fade" id="newWebContentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New web content</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="newWebContentModalBody">
+
+          <label for="newWebContentPageName">Page Name:</label><br>
+          <input type="text" id="newWebContentPageName" name="pageName"><br>
+          <label for="newWebContentSectionName">Section Name:</label><br>
+          <input type="text" id="newWebContentSectionName" name="sectionName"><br>
+          <label for="newWebContentSectionComponent">Section Component:</label><br>
+          <input type="text" id="newWebContentSectionComponent" name="sectionComponent"><br>
+          <label for="newWebContentSectionSubComponent">Section Subcomponent:</label><br>
+          <input type="text" id="newWebContentSectionSubComponent" name="sectionSubComponent"><br>
+          <label for="newWebContentSectionCotent">Section Content:</label><br>
+          <input type="text" id="newWebContentSectionCotent" name="sectionContent"><br>
+          <label for="newWebContentImgUrl">Image URL:</label><br>
+          <input type="text" id="newWebContentImgUrl" name="imgUrl"><br>
+          <label for="newWebContentActive"> Status Message Active</label><br>
+          <input type="checkbox" id="newWebContentActive" name="statusActive" value="true"><br>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"
+            onclick="createNewWebContent(document.getElementById('newWebContentModalBody'))">Save </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- Update Web content  -->
+  <div class="modal fade" id="updateWebContentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update page content</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="manageWebsiteContentModayBody">
+          <h5>Update web content modal</h5>
+          <table class="modalTable table-responsive">
+            <thead>
+              <tr class="modalTable">
+                <th class="modalTable">Id</th>
+                <th class="modalTable">Page Name</th>
+                <th class="modalTable">Section Name</th>
+                <th class="modalTable">Section Component</th>
+                <th class="modalTable">Section subcomponent</th>
+                <th class="modalTable">Content text</th>
+                <th class="modalTable">Image url</th>
+                <th class="modalTable">Active</th>
+              </tr>
+            </thead>
+            <tr class="modalTable" th:each="awc:${allWebsiteContent}">
+              <td class="modalTable" th:text="${awc.id}">1</td>
+              <td class="modalTable" th:text="${awc.pageName}" contenteditable="true"
+                onkeydown="collectUpdatedWebContentData(this); this.onkeydown=null;">Admin</td>
+              <td class="modalTable" th:text="${awc.sectionName}" contenteditable="true"
+                onkeydown="collectUpdatedWebContentData(this); this.onkeydown=null;">ManageWebsite</td>
+              <td class="modalTable" th:text="${awc.sectionComponent}" contenteditable="true"
+                onkeydown="collectUpdatedWebContentData(this); this.onkeydown=null;">ManageWebContent</td>
+              <td class="modalTable" th:text="${awc.sectionSubcomponent}" contenteditable="true"
+                onkeydown="collectUpdatedWebContentData(this); this.onkeydown=null;">Button</td>
+              <td class="modalTable" th:text="${awc.contentText}" contenteditable="true"
+                onkeydown="collectUpdatedWebContentData(this); this.onkeydown=null;">Options</td>
+              <td class="modalTable" th:text="${awc.imageUrl}" contenteditable="true"
+                onkeydown="collectUpdatedWebContentData(this); this.onkeydown=null;">Null</td>
+              <td class="modalTable">
+                <!--Checkbox-->
+                <input type="checkbox" th:id="'websiteContentActive' + ${awc.id}" name="statusActive" value="True"
+                  th:checked="${awc.contentActive}" onclick="collectUpdatedWebContentData(this)">
+              </td>
+              <td class="modalTable">
+                <!--Delete btn-->
+                <button type="button" class="btn btn-danger"
+                  th:attr="onclick=|deleteWebsiteContent('${awc.id}',this)|">Delete</button>
+
+              </td>
+            </tr>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="updateWbContentData()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- New Card  -->
+  <div class="modal fade" id="newCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New card</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="newCardModalBody">
+          <label for="newCardPageName">Page Name:</label><br>
+          <input type="text" id="newCardPageName" name="pageName"><br>
+          <label for="newCardSectionName">Section Name:</label><br>
+          <input type="text" id="newCardSectionName" name="pageName"><br>
+          <label for="newCardCardName">Card Name:</label><br>
+          <input type="text" id="newCardCardName" name="cardName"><br>
+          <label for="newCardContent">Card Content:</label><br>
+          <input type="text" id="newCardContent" name="cardContent"><br>
+          <label for="newCardImgUrl">Image URL:</label><br>
+          <input type="text" id="newCardImgUrl" name="imgUrl"><br>
+          <label for="newCardActive"> Card Active</label><br>
+          <input type="checkbox" id="newCardActive" name="statusActive" value="true"><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"
+            onclick="createNewCard(document.getElementById('newCardModalBody'))">Save </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Modal -- Update Card content  -->
+  <div class="modal fade" id="updateCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update cards</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="updateCardModalBody">
+          <table class="modalTable">
+            <thead>
+              <tr class="modalTable">
+                <th class="modalTable">Id</th>
+                <th class="modalTable">Page Name</th>
+                <th class="modalTable">Section Name</th>
+                <th class="modalTable">Image URL</th>
+                <th class="modalTable">Title</th>
+                <th class="modalTable">Content text</th>
+                <th class="modalTable">Active</th>
+              </tr>
+            </thead>
+            <tr class="modalTable" th:each="card:${websiteCards}">
+              <td class="modalTable" th:text="${card.id}" contenteditable="true"
+                onkeydown="collectUpdatedCardData(this); this.onkeydown=null;">1</td>
+              <td class="modalTable" th:text="${card.pageName}" contenteditable="true"
+                onkeydown="collectUpdatedCardData(this); this.onkeydown=null;">Contact</td>
+              <td class="modalTable" th:text="${card.sectionName}" contenteditable="true"
+                onkeydown="collectUpdatedCardData(this); this.onkeydown=null;">Contact Us</td>
+              <td class="modalTable" th:text="${card.image}" contenteditable="true"
+                onkeydown="collectUpdatedCardData(this); this.onkeydown=null;">bi bi-telephone</td>
+              <td class="modalTable" th:text="${card.title}" contenteditable="true"
+                onkeydown="collectUpdatedCardData(this); this.onkeydown=null;">Telephone</td>
+              <td class="modalTable" th:text="${card.text}" contenteditable="true"
+                onkeydown="collectUpdatedCardData(this); this.onkeydown=null;">Tel:01234567897</td>
+              <td class="modalTable">
+
+                <input type="checkbox" th:id="'WebsiteCardsActive' + ${card.id}" name="statusActive" value="True"
+                  th:checked="${card.active}" onclick="collectUpdatedCardData(this)">
+
+              <td class="modalTable">
+
+                <button type="button" class="btn btn-danger"
+                  th:attr="onclick=|deleteCard('${card.id}',this)|">Delete</button>
+
+              </td>
+            </tr>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="updateCardData()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--######################################################################################################################################################################-->
+  <!--#####################################                                          FAQ                                              ######################################-->
+  <!--######################################################################################################################################################################-->
+  <!--Modal -- New FAQ -->
+  <div class="modal fade" id="newFaqModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new FAQ</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="newFaqModalBody">
+
+
+          <label for="faqQuestion">FAQ question:</label><br>
+          <input type="text" id="faqQuestion" name="fname"><br>
+          <label for="faqAnswer">FAQ answer:</label><br>
+          <input type="text" id="faqAnswer" name="fname"><br>
+          <label for="faqcategory">FAQ category:</label><br>
+          <input type="text" id="faqcategory" name="fname"><br>
+          <label for="faqActive"> FAQ Active</label><br>
+          <input type="checkbox" id="faqActive" name="statusActive" value="true"><br>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="createNewFaq"
+            onclick="createNewFaq(document.getElementById('newFaqModalBody'))">Create FAQ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- Update FAQ -->
+  <div class="modal fade" id="updateFAQModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update FAQ</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="updateFAQModalBody">
+
+          <table class="modalTable" id="updateFaqTable">
+            <thead>
+              <tr class="modalTable">
+                <th class="modalTable">Id</th>
+                <th class="modalTable">Question</th>
+                <th class="modalTable">Answer</th>
+                <th class="modalTable">Category</th>
+                <th class="modalTable">Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="modalTable" th:each="faq:${faqList}">
+                <td class="modalTable" th:text="${faq.id}">1</td>
+                <td class="modalTable" th:text="${faq.question}" contenteditable="true"
+                  onkeydown="collectUpdatedFaqData(this); this.onkeydown=null;"></td>
+                <td class="modalTable" th:text="${faq.answer}" contenteditable="true"
+                  onkeydown="collectUpdatedFaqData(this); this.onkeydown=null;"></td>
+                <td class="modalTable" th:text="${faq.category}" contenteditable="true"
+                  onkeydown="collectUpdatedFaqData(this); this.onkeydown=null;"></td>
+                <td class="modalTable">
+
+                  <input type="checkbox" th:id="'faqActive' + ${faq.id}" name="statusActive" value="True"
+                    th:checked="${faq.active}" onclick="collectUpdatedFaqData(this)">
+
+                </td>
+                <td class="modalTable">
+                  <button type="button" class="btn btn-danger"
+                    th:attr="onclick=|deleteFaq('${faq.id}',this)|">Delete</button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="updateFaqData()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--######################################################################################################################################################################-->
+  <!--#####################################                                       Cutomers                                            ######################################-->
+  <!--######################################################################################################################################################################-->
+
+  <!--Modal -- Manage customer details  -->
+  <div class="modal fade bd-example-modal-lg" id="manageCustomersModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Manage customers</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="manageCustomersModayBody">
+          <h5>Manage customers</h5>
+          <table class="modalTable" id="mobileUsersTable">
+            <thead id="manageCustomersTableHead">
+              <tr class="modalTable">
+                <th class="modalTable">Username</th>
+                <th class="modalTable">User Id</th>
+                <th class="modalTable">First Name</th>
+                <th class="modalTable">Last Name</th>
+                <th class="modalTable">Email</th>
+                <th class="modalTable">Company</th>
+                <th class="modalTable">Account active</th>
+                <th class="modalTable">Is user admin</th>
+              </tr>
+            </thead>
+            <tbody id="manageCustomersTableBody">
+              <tr class="modalTable" th:each="usrdtl:${userDetails}">
+                <td class="modalTable" th:text="${usrdtl.ud.username}">jDoe1</td>
+                <td class="modalTable" th:text="${usrdtl.ud.userId}">1</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.firstName}">John</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.lastName}">Doe</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.email}">jDoe@somecompany.com</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.company}">Some Company</td>
+                <td class="modalTable">
+                  <input type="checkbox" th:id="'userActive' + ${usrdtl.ud.userId}" name="userActive" value="True"
+                    th:checked="${usrdtl.isActive}" th:attr="onclick=|toggleUserActive('${usrdtl.ud.username}',this)|">
+                </td>
+                <td class="modalTable">
+                  <input type="checkbox" th:id="'userAdmin' + ${usrdtl.ud.userId}" name="userAdmin" value="True"
+                    th:checked="${usrdtl.isAdmin}" th:attr="onclick=|toggleUserAdmin('${usrdtl.ud.username}',this)|">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateUsersBtn">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal -- New customers -->
+  <div class="modal fade" id="newCustomerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create new customer account</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modalInnerClass">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <div class="card-body" id="newCustomerCardBody">
+
+                    <label for="newCustomerUsername">Username:</label><br>
+                    <input type="text" id="newCustomerUsername" name="newCustomerUsername" required><br>
+                    <label for="newCustomerPassword">Password:</label><br>
+                    <input type="text" id="newCustomerPassword" name="newCustomerPassword" required><br>
+                    <label for="newCustomerActive"> User is ADMIN</label><br>
+                    <input type="checkbox" id="newCustomerActive" name="newCustomerActive" checked="false" required><br>
+                    <label for="newCustomerFName">First Name:</label><br>
+                    <input type="text" id="newCustomerFName" name="newCustomerFName" required><br>
+                    <label for="newCustomerLName">Last Name:</label><br>
+                    <input type="text" id="newCustomerLName" name="newCustomerLName" required><br>
+                    <label for="newCustomerEmail">Email:</label><br>
+                    <input type="text" id="newCustomerEmail" name="newCustomerEmail" required><br>
+                    <label for="newCustomerCompany">Company:</label><br>
+                    <input type="text" id="newCustomerCompany" name="newCustomerCompany" required><br>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveNewMobileUserBtn"
+            th:attr="onclick=|addNewCustomer()|">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--######################################################################################################################################################################-->
+  <!--#####################################                                     Mobile Users                                          ######################################-->
+  <!--######################################################################################################################################################################-->
+  <!--Modal -- Manage Mobile users  -->
+  <div class="modal fade bd-example-modal-lg" id="manageMobileUserModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Manage mobile users</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="manageMobileUsersModayBody">
+          <h5>Manage mobile users modal</h5>
+          <table class="modalTable" id="mobileUsersTable">
+            <thead id="mobileUsersTableHead">
+              <tr class="modalTable">
+                <th class="modalTable">Username</th>
+                <th class="modalTable">User Id</th>
+                <th class="modalTable">First Name</th>
+                <th class="modalTable">Last Name</th>
+                <th class="modalTable">Email</th>
+                <th class="modalTable">Company</th>
+                <th class="modalTable">Account active</th>
+              </tr>
+            </thead>
+            <tbody id="mobileUsersTableBody">
+              <tr class="modalTable" th:each="mobileUser:${mobileUsersList}">
+                <td class="modalTable" th:text="${mobileUser.mobileUsername}">jDoe1</td>
+                <td class="modalTable" th:text="${mobileUser.mobileUserId}">1</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.firstName}"
+                  onkeydown="collectUpdatedMobileUserData(this); this.onkeydown=null;">John</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.lastName}"
+                  onkeydown="collectUpdatedMobileUserData(this); this.onkeydown=null;">Doe</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.email}"
+                  onkeydown="collectUpdatedMobileUserData(this); this.onkeydown=null;">jDoe@somecompany.com</td>
+                <td class="modalTable" contenteditable th:text="${mobileUser.company}"
+                  onkeydown="collectUpdatedMobileUserData(this); this.onkeydown=null;">Some Company</td>
+                <td class="modalTable">
+                  <input type="checkbox" th:id="'mobileUserActive' + ${mobileUser.mobileUserId}" name="mobileUserActive"
+                    value="True" th:checked="${mobileUser.userActive}" onclick="collectUpdatedMobileUserData(this);">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateMobileUsersBtn" onclick="updateMobileUsersData()">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Modal -- New Mobile User Modal -->
+  <div class="modal fade" id="newMobileUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create new mobile user</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modalInnerClass">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <div class="card-body" id="newMobileUserCardBody">
+
+                    <label for="newMobileUserUsername">Username:</label><br>
+                    <input type="text" id="newMobileUserUsername" name="newMobileUserUsername" required><br>
+                    <label for="newMobileUserPassword">Password:</label><br>
+                    <input type="text" id="newMobileUserPassword" name="newMobileUserPassword" required><br>
+                    <label for="newMobileUserActive"> User Status Active</label><br>
+                    <input type="checkbox" id="newMobileUserActive" name="newMobileUserActive" checked="true"
+                      required><br>
+                    <label for="newMobileUserFName">First Name:</label><br>
+                    <input type="text" id="newMobileUserFName" name="newMobileUserFName" required><br>
+                    <label for="newMobileUserLName">Last Name:</label><br>
+                    <input type="text" id="newMobileUserLName" name="newMobileUserLName" required><br>
+                    <label for="newMobileUserEmail">Email:</label><br>
+                    <input type="text" id="newMobileUserEmail" name="newMobileUserEmail" required><br>
+                    <label for="newMobileUserCompany">Company:</label><br>
+                    <input type="text" id="newMobileUserCompany" name="newMobileUserCompany" required><br>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveNewMobileUserBtn"
+            th:attr="onclick=|createNewMobileUser('${userId}')|">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--######################################################################################################################################################################-->
+  <!--#####################################                                        Footer                                             ######################################-->
+  <!--######################################################################################################################################################################-->
+
+
+  <!-- Footer-->
+  <footer class="bg-dark py-4 mt-auto">
+    <div class="container px-5">
+      <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+        <div class="col-auto">
+          <div class="small m-0 text-white">Copyright &copy; StampQR 2023</div>
+        </div>
+        <div class="col-auto">
+          <a class="link-light small" href="#!">Privacy</a>
+          <span class="text-white mx-1">&middot;</span>
+          <a class="link-light small" href="#!">Terms</a>
+          <span class="text-white mx-1">&middot;</span>
+          <a class="link-light small" href="#!">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function createNewStatusMessage() {
+      var statusTitle = document.getElementById("statusTitle").value;
+      var statusMessage = document.getElementById("statusMessage").value;
+      var statusActive = document.getElementById("statusActive").value;
+      console.log("http://localhost:8081//websiteStatus/createNewStatusMessage/" + statusTitle + "/" + statusMessage + "/" + statusActive);
+
+      $.get("http://localhost:8081//websiteStatus/createNewStatusMessage/Status2/Status2msg/true", {},
+        function () {
+          alert("New status message created!");
+        });
+
+
+    }
+  </script>
+
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="js/scripts.js"></script>
+</body>
+
+</html>

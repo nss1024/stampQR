@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>StampQR - Home</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/logo.ico}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <!--Javascript-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+
+
+    </head>
+    <body class="d-flex flex-column h-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container px-5">
+                    <a class="navbar-brand" th:href="@{home}">stampQR</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" th:href="@{home}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{login}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
+
+                        </ul>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Header-->
+            <header class="bg-dark py-5">
+                <div class="container px-5">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-8 col-xl-7 col-xxl-6">
+                            <div class="my-5 text-center text-xl-start">
+                                <h1 class="display-5 fw-bolder text-white mb-2" th:text="${HeaderTitle}"></h1>
+                                <p class="lead fw-normal text-white-50 mb-4" th:text="${HeaderText}"></p>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" th:src="@{/assets/logoV3.jpg}" width="400" height="300" alt="StampQR logo" /></div>
+                    </div>
+                </div>
+            </header>
+            <!-- Links to services-->
+            <section class="py-5" id="features">
+                <div class="container px-5 my-5">
+                    <div class="container px-5 my-5">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-16 col-xxl-12">
+                                <div class="text-center my-5">
+                                    <h1 class="fw-bolder mb-3">Quick launch</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-lg-16">
+                            <div class="row gx-4 row-cols-1 row-cols-md-4">
+                                <div th:each="icql:${quickLaunchItems}">
+
+                                    <div class="col mb-5 h-100" >
+                                        <a th:href="@{${icql.quickLaunchLink}}">
+                                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i th:class="${icql.bootstrapImageName}"></i></div>
+                                        </a>
+                                        <h2 class="h5" th:text="${icql.titleText}"></h2>
+                                        <p class="mb-0" th:text="${icql.descriptionText}"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+            </section>
+            
+            
+        </main>
+        <!-- Footer-->
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; StampQR 2023</div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="#!">Privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Terms</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
