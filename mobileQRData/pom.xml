@@ -42,6 +42,12 @@
 			<artifactId>mariadb-java-client</artifactId>
 			<version>3.1.4</version>
 		</dependency>
+		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

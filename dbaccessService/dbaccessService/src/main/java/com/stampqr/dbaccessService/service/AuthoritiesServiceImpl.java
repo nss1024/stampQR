@@ -14,9 +14,9 @@ public class AuthoritiesServiceImpl implements AuthoritiesService{
     @Autowired
     private AuthoritiesRepository authoritiesRepository;
 
-    public Authorities getAuthoritiesByUsername(String userName){
-        Authorities a = authoritiesRepository.getAuthoritiesByUsername(userName);
-        return a;
+    public List<Authorities> getAuthoritiesByUsername(String userName){
+        List<Authorities> al = authoritiesRepository.getAuthoritiesByUsername(userName);
+        return al;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService{
 
     @Override
     public void updateAuthority(String authority, String userName) {
-        Authorities a = authoritiesRepository.getAuthoritiesByUsername(userName);
+        Authorities a = authoritiesRepository.getAuthorityByUsername(userName);
         a.setAuthority(authority);
     }
 

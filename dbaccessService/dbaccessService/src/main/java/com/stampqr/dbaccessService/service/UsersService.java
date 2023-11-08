@@ -17,4 +17,6 @@ public interface UsersService {
 
     public Boolean isEnabled(String userName);
 
+    public Users getUserByUsername(String username);
+
 }

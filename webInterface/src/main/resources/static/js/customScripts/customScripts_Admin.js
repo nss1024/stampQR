@@ -48,15 +48,16 @@ function addNewCustomer() {
 
                 });
         }
-        //Wait 1 sec to show success/fail message then reload page
-        setTimeout(function () {
-            window.location.reload();
-        }, 1000);
     } catch (err) {
         handleValidationFail(document.getElementById('newCustomerCardBody'), 'Operation failed');
         console.log(err);
     }
-
+    //Wait 1 sec to show success/fail message then reload page
+    if(valid){
+    setTimeout(function () {
+    window.location.reload();
+    }, 1000);
+    }
 }
 
 function toggleUserActive(username, element) {
@@ -93,6 +94,73 @@ function toggleUserAdmin(username, element) {
         console.log(err);
     }
 
+}
+
+var customerDataToUpdate = [];
+var customerChangedElements = [];
+
+function collectUpdatedCustomerData(element){
+    if (element.hasAttribute('checked')) { element = element.parentElement; }//if we have a checkbox, get its parrent element, input
+    var row = element.closest('tr');//get the row the data is in
+    setElementbackgrounfColor(element);
+    customerChangedElements.push(element);//store the element that has been changed 
+    customerDataToUpdate.push(row);//store the changed rows
+}
+
+function updateCustomerData(){
+    var validation = true;
+    const colsToCheck = [2, 3, 4, 5];
+    const emailColumn = 4;
+    const idColumn = 1;
+    const activeColumn = 6;
+    //validate data
+    if (customerDataToUpdate.length > 0) {
+        for (let i = 0; i < customerDataToUpdate.length; i++) {
+            var row = customerDataToUpdate[i];
+            for (let j = 0; j < row.cells.length; j++) {
+                if (colsToCheck.includes(j)) {
+                    if (j == emailColumn) {
+                        if (!validateEmail(row.cells[j].innerHTML)) {
+                            handleValidationFail(document.getElementById('manageCustomersModayBody'), "Email validation failed!");
+                            validation = false;
+                            break;
+                        }
+                    } else {
+                        if (!validateText(row.cells[j].innerHTML, 2)) {
+                            handleValidationFail(document.getElementById('manageCustomersModayBody'), "Text validation failed! " + row.cells[j].innerHTML);
+                            validation = false;
+                            break;
+                        }
+                    }
+                    //console.log(row.cells[j].childNodes[1].checked);
+                }
+            }
+        }
+    }
+    for (let i = 0; i < customerDataToUpdate.length; i++) {
+        var dataToSend = customerDataToUpdate[i];
+        if (validation) {
+            try {
+                var uri2 = "http://localhost:8081/userDetails/update/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].innerHTML + "/" + dataToSend.cells[4].innerHTML + "/" + dataToSend.cells[5].innerHTML;
+                $.post(uri2, {},
+                    function (data, status) {
+                        if (status == "success") {
+                            notifySuccess(document.getElementById("manageCustomersModayBody"), "Customer data updated successfully. Status: " + status);
+                        }
+                    });
+            } catch (err) {
+                handleValidationFail(document.getElementById("manageCustomersModayBody"), "Operation failed! ");
+                console.log(err);
+                break;
+            }
+
+        }
+    }
+    if(validation){
+    setTimeout(function () {
+        window.location.reload();
+    }, 2000);
+    }
 }
 
 
@@ -149,10 +217,11 @@ function createNewMobileUser(creatingUserId) {
             console.log(err);
         }
     }
+    if(valid){
     setTimeout(function () {
         window.location.reload();
     }, 2000);
-    //console.log(mobileEmail + ' ' + mobileUserActive);
+    }
 }
 
 var dataToUpdate = [];
@@ -193,11 +262,7 @@ function updateMobileUsersData() {
                     }
                     //console.log(row.cells[j].childNodes[1].checked);
                 }
-
-
-
             }
-
         }
     }
     for (let i = 0; i < dataToUpdate.length; i++) {
@@ -219,9 +284,11 @@ function updateMobileUsersData() {
 
         }
     }
+    if(validation){
     setTimeout(function () {
         window.location.reload();
     }, 2000);
+    }
 
 }
 
@@ -264,6 +331,11 @@ function createNewStatusMessage() {
             console.log(err);
         }
 
+    }
+    if(validation){
+        setTimeout(function () {
+            window.location.reload();
+        }, 2000);
     }
 
 }
@@ -330,9 +402,11 @@ function updateStatusMsgData() {
 
         }
     }
+    if(validation){
     setTimeout(function () {
         window.location.reload();
     }, 2000);
+    }
 }
 
 function deleteStatusMessage(msgId, element) {
@@ -402,16 +476,20 @@ function deleteWebsiteContent(id, element){
 
 function updateWbContentData(){
     var validation = true;
-    validateTableRowArrayOfInputs(webContentDataToUpdate, [1,2,3,4,5,6], emailColumn = 'na', 3, 'manageWebsiteContentModayBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
+    validation = validateTableRowArrayOfInputs(webContentDataToUpdate, [1,2,3,4,5,6], emailColumn = 'na', 0, 'manageWebsiteContentModayBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
+    if(validation){
     for (let i = 0; i < webContentDataToUpdate.length; i++) {            
         var uriAddress = 'http://localhost:8081/webContent/updateWebContent/'+webContentDataToUpdate[i].cells[0].innerHTML+'/'+webContentDataToUpdate[i].cells[1].innerHTML+
         '/'+webContentDataToUpdate[i].cells[2].innerHTML+'/'+webContentDataToUpdate[i].cells[3].innerHTML+'/'+webContentDataToUpdate[i].cells[4].innerHTML+
         '/'+webContentDataToUpdate[i].cells[5].innerHTML+'/'+webContentDataToUpdate[i].cells[6].innerHTML+'/'+webContentDataToUpdate[i].cells[7].childNodes[3].checked;
         sendData(uriAddress, 'POST', 'manageWebsiteContentModayBody', 'Webcontent updated!', 'Update failed!', 'Operation failed!');    
+        }
     }
+    if(validation){
     setTimeout(function () {
         window.location.reload();
     }, 2000);     
+    }
 }
 
 function createNewCard(element){
@@ -468,7 +546,7 @@ function collectUpdatedCardData(element){
 
 function updateCardData(){
     var validation = true;
-    validateTableRowArrayOfInputs(cardsToUpdate, [1,2,3,4,5], emailColumn = 'na', 3, 'updateCardModalBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
+    validation = validateTableRowArrayOfInputs(cardsToUpdate, [1,2,3,4,5], emailColumn = 'na', 3, 'updateCardModalBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
     console.log(cardsToUpdate[0].cells[0].innerHTML);
     console.log(cardsToUpdate[0].cells[1].innerHTML);
     console.log(cardsToUpdate[0].cells[2].innerHTML);
@@ -476,18 +554,19 @@ function updateCardData(){
     console.log(cardsToUpdate[0].cells[4].innerHTML);
     console.log(cardsToUpdate[0].cells[5].innerHTML);
     console.log(cardsToUpdate[0].cells[6].childNodes[1].checked);
-   
+   if(validation){
     for (let i = 0; i < cardsToUpdate.length; i++) {               
         var uriAddress = 'http://localhost:8081/websitecards/updateCard/'+cardsToUpdate[i].cells[0].innerHTML+'/'+cardsToUpdate[i].cells[1].innerHTML+
         '/'+cardsToUpdate[i].cells[2].innerHTML+'/'+cardsToUpdate[i].cells[3].innerHTML+'/'+cardsToUpdate[i].cells[4].innerHTML+
         '/'+cardsToUpdate[i].cells[5].innerHTML+'/'+cardsToUpdate[0].cells[6].childNodes[1].checked;
         sendData(uriAddress, 'POST', 'updateCardModalBody', 'Card updated!', 'Update failed!', 'Operation failed!');    
+        }
     }
-    
-   
+   if(validation){
     setTimeout(function () {
         window.location.reload();
     }, 2000); 
+    }
 }
 
 function createNewFaq(element){
@@ -539,7 +618,23 @@ function collectUpdatedFaqData(element){
 }
 
 function updateFaqData(){
-    console.log(faqsToUpdate[0]);
+    
+    var validation = true;
+    validation = validateTableRowArrayOfInputs(faqsToUpdate, [1,2,3,4], emailColumn = 'na', 3, 'updateFAQModalBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
+    if(validation){
+        for (let i = 0; i < faqsToUpdate.length; i++) {               
+            var uriAddress = 'http://localhost:8081/faq/updateFaq/'+faqsToUpdate[i].cells[0].innerHTML+'/'+faqsToUpdate[i].cells[1].innerHTML+
+            '/'+faqsToUpdate[i].cells[2].innerHTML+'/'+faqsToUpdate[i].cells[3].innerHTML+'/'+faqsToUpdate[i].cells[4].childNodes[1].checked;            
+            sendData(uriAddress, 'POST', 'updateFAQModalBody', 'FAQ updated!', 'Update failed!', 'Operation failed!');    
+            }
+        }
+        
+        if(validation){
+            setTimeout(function () {
+                window.location.reload();
+            }, 2000)
+        }
+        
 }
 
 
@@ -624,7 +719,7 @@ function sendData(uriAddress, opType, parentElementName, successmessage, failedM
 }
 
 function validateTableRowArrayOfInputs(dataToCheck, columnsToCheck, emailColumn = 'na', textLength, parentElementName, successMessage, failedMessage, opErrorMessage) {
-
+    validation = true;
     try {
         if (dataToCheck.length > 0 & columnsToCheck.length != 0) {
             for (let i = 0; i < dataToCheck.length; i++) {// Go through each row of the array
@@ -639,7 +734,7 @@ function validateTableRowArrayOfInputs(dataToCheck, columnsToCheck, emailColumn 
                                     break;
                                 }
                             }
-                        } else { // if nor email , validate text
+                        } else { // if not email , validate text
                             if (!validateText(row.cells[j].innerHTML, textLength)) {
                                 handleValidationFail(document.getElementById(parentElementName), failedMessage);
                                 validation = false;
@@ -655,9 +750,11 @@ function validateTableRowArrayOfInputs(dataToCheck, columnsToCheck, emailColumn 
 
             }
         }
+        return validation;
     } catch (err) {
         console.log(err);
         handleValidationFail(document.getElementById(parentElement), opErrorMessage);
+        return false;
     }
 }
 
@@ -667,6 +764,17 @@ function collectTableData(element, changedRows, changedElement){
     setElementbackgrounfColor(element);
     changedElement.push(element);//store the element that has been changed 
     changedRows.push(row);//store the changed rows
+}
+
+function emptyInputFields(element){   
+    var containerElement= element.parentElement.parentElement.childNodes[3]; 
+    var inputElements = containerElement.querySelectorAll('input,checkbox');    
+    for (let i = 0; i < inputElements.length; i++) {
+        if(inputElements[i].hasAttribute('checked')){
+            inputElements[i].checked=false;
+        }
+        inputElements[i].value="";        
+    }
 }
 
 //Show active status messages

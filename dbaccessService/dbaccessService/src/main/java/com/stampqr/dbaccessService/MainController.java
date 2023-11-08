@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.ServerRequest;
 
@@ -56,12 +58,26 @@ public class MainController {
     @Autowired
     FaqServiceImpl faqService;
 
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+
     @PostMapping(value="/users/adduser/{userName}/{password}")
     public boolean addNewUser(@PathVariable("userName") String userName,@PathVariable("password") String password){
 
-    boolean success = usersService.saveNewUser(userName,password);
+    boolean success = usersService.saveNewUser(userName,passwordEncoder.encode(password));
 
     return success;
+    }
+
+    @GetMapping(value="/users/getUserByUsername/{username}")
+    public Users getUserByUsername(@PathVariable("username") String username){
+        return usersService.getUserByUsername(username);
+    }
+
+    @GetMapping(value="/authorities/getAuthoritiesByUsername/{username}")
+    public AuthoritiesList getAuthoritiesByUsername(@PathVariable("username") String username){
+        AuthoritiesList al = new AuthoritiesList();
+        al.setAuthoritiesList(authoritiesService.getAuthoritiesByUsername(username));
+        return al;
     }
 
     @PostMapping(value="webContent/addWebContent/{pageName}/{sectionName}/{sectionComponent}/{sectionSubcomponent}/{contentText}/{imageUrl}/{active}")
@@ -313,7 +329,7 @@ public class MainController {
 
     @PostMapping(value = "mobileUsers/addNewUser/{username}/{password}")
     public void addUNewMobileUser(@PathVariable("username") String username,@PathVariable("password") String password){
-        mobileUsersService.addNewMobileUser(username,password);
+        mobileUsersService.addNewMobileUser(username,passwordEncoder.encode(password));
         mobileAuthoritiesService.SetMobileAuthority(username);
 
     }

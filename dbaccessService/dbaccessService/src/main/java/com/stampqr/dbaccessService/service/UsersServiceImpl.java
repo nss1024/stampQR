@@ -62,5 +62,10 @@ public class UsersServiceImpl implements UsersService{
         return u.getEnabled();
     }
 
+    @Override
+    public Users getUserByUsername(String username) {
+        return usersRepository.findById(username).get();
+    }
+
 
 }

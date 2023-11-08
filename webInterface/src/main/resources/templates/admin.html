@@ -26,7 +26,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-  <script src="js/customScripts_Admin.js" defer></script>
+  <script src="js/customScripts/customScripts_Admin.js" defer></script>
   <main class="flex-shrink-0">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -40,9 +40,9 @@
             <li class="nav-item"><a class="nav-link" th:href="@{home}">Home</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{login}">Login</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
-
+            <li class="nav-item"><a class="nav-link" th:href="@{login_user}">User Account</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{userLoggedIn} ? login : logout" th:text="${userLoggedIn} ? 'Sign out':'Login'">Option</a></li>
           </ul>
           </li>
           </ul>
@@ -212,7 +212,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputFields(this)">Close</button>
           <button type="button" class="btn btn-primary" id="createNewStatusMessageBtn"
             onclick="createNewStatusMessage()">Create status message</button>
         </div>
@@ -396,7 +396,7 @@
           <input type="checkbox" id="newCardActive" name="statusActive" value="true"><br>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputFields(this)">Close</button>
           <button type="button" class="btn btn-primary"
             onclick="createNewCard(document.getElementById('newCardModalBody'))">Save </button>
         </div>
@@ -490,7 +490,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputFields(this)">Close</button>
           <button type="button" class="btn btn-primary" id="createNewFaq"
             onclick="createNewFaq(document.getElementById('newFaqModalBody'))">Create FAQ</button>
         </div>
@@ -500,7 +500,7 @@
 
   <!--Modal -- Update FAQ -->
   <div class="modal fade" id="updateFAQModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Update FAQ</h1>
@@ -583,10 +583,14 @@
               <tr class="modalTable" th:each="usrdtl:${userDetails}">
                 <td class="modalTable" th:text="${usrdtl.ud.username}">jDoe1</td>
                 <td class="modalTable" th:text="${usrdtl.ud.userId}">1</td>
-                <td class="modalTable" contenteditable th:text="${usrdtl.ud.firstName}">John</td>
-                <td class="modalTable" contenteditable th:text="${usrdtl.ud.lastName}">Doe</td>
-                <td class="modalTable" contenteditable th:text="${usrdtl.ud.email}">jDoe@somecompany.com</td>
-                <td class="modalTable" contenteditable th:text="${usrdtl.ud.company}">Some Company</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.firstName}"
+                onkeydown="collectUpdatedCustomerData(this); this.onkeydown=null;">John</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.lastName}"
+                onkeydown="collectUpdatedCustomerData(this); this.onkeydown=null;">Doe</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.email}"
+                onkeydown="collectUpdatedCustomerData(this); this.onkeydown=null;">jDoe@somecompany.com</td>
+                <td class="modalTable" contenteditable th:text="${usrdtl.ud.company}"
+                onkeydown="collectUpdatedCustomerData(this); this.onkeydown=null;">Some Company</td>
                 <td class="modalTable">
                   <input type="checkbox" th:id="'userActive' + ${usrdtl.ud.userId}" name="userActive" value="True"
                     th:checked="${usrdtl.isActive}" th:attr="onclick=|toggleUserActive('${usrdtl.ud.username}',this)|">
@@ -602,8 +606,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="updateUsersBtn">Save
-            changes</button>
+          <button type="button" class="btn btn-primary" id="updateUsersBtn" onclick="updateCustomerData()">Save Changes</button>
         </div>
       </div>
     </div>
@@ -646,9 +649,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputFields(this)">Close</button>
           <button type="button" class="btn btn-primary" id="saveNewMobileUserBtn"
-            th:attr="onclick=|addNewCustomer()|">Save changes</button>
+            th:attr="onclick=|addNewCustomer()|">Save</button>
         </div>
       </div>
     </div>
@@ -749,7 +752,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputFields(this)">Close</button>
           <button type="button" class="btn btn-primary" id="saveNewMobileUserBtn"
             th:attr="onclick=|createNewMobileUser('${userId}')|">Save</button>
         </div>

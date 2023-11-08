@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonBuilderUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,20 +29,44 @@ public class WebinterfaceController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
     //****************Mock user details*********************
-    Long userId = 1L;
-    String userName = "simon1";
+
+    Long globalUserId = 0L;
+
 
     //******************************************************
+    @GetMapping(value="/login")
+    public String loginPage(){
+        return "login";
+    }
 
-    @RequestMapping("/home")
-    public String qrStampHome(Model model){
+    @RequestMapping({"/home","/"})
+    public String qrStampHome(Model model, Authentication auth){
 
-        String siteContentURL = "http://localhost:8081//webContent/getPageContent/"+"index";
-        WebSiteContentList wscl = restTemplate.getForObject("http://localhost:8081//webContent/getPageContent/", WebSiteContentList.class);
+        Boolean userLoggedIn = !Objects.isNull(auth);
+        Boolean isAdmin = false;
+        List<String> gl = new ArrayList<>();
+        if(!Objects.isNull(auth)){
+           auth.getAuthorities().forEach(a -> {gl.add(a.getAuthority());});
+        }
+        if(gl.size()>0){
+            for (String s:gl) {
+                if(s.equals("ADMINISTRATOR")){
+                    isAdmin=true;
+                }
+            }
+        }
+        System.out.println(isAdmin);
 
 
+        String siteContentURL = "http://localhost:8081/webContent/getPageContent/"+"index";
+        WebSiteContentList wscl = restTemplate.getForObject(siteContentURL, WebSiteContentList.class);
 
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("userLoggedIn",userLoggedIn);
         model.addAttribute("HeaderTitle","One stamp for all your information");
         model.addAttribute("HeaderText","Think it, make it, leave your stamp on traceability.");
         List<IndexContent> indexContent = new ArrayList<>();
@@ -66,7 +94,10 @@ public class WebinterfaceController {
         return "index";
     }
     @RequestMapping("/admin")
-    public String stampQrAdmin(Model model){
+    public String stampQrAdmin(Model model, Authentication auth){
+        //Get username of logged in user
+        String userName = auth.getName();
+        Boolean userLoggedIn = !userName.isEmpty();
 
         restTemplate = new RestTemplate();
 
@@ -82,6 +113,8 @@ public class WebinterfaceController {
         //Get loggedin user details
         String userDetailsUri = "http://localhost:8081//userDetails/getUserDetails/"+userName;
         UserDetails userDetails = restTemplate.getForObject(userDetailsUri, UserDetails.class);
+        Long userId = userDetails.getUserId();
+        globalUserId = userId;
 
         //Get mobile users
         String mobileUsersUri = "http://localhost:8081/mobileUserDetails/getAll";
@@ -114,6 +147,7 @@ public class WebinterfaceController {
 
 
         model.addAttribute("userDetails",userDetailsWList);
+        model.addAttribute("userLoggedIn",userLoggedIn);
         model.addAttribute("userId",userId);
         model.addAttribute("LoggedInUserDetails",userDetails);
         model.addAttribute("mobileUsersList",mobileUserDetailsList);
@@ -126,17 +160,20 @@ public class WebinterfaceController {
         return "admin";
     }
     @RequestMapping("/contact")
-    public String contactPage(Model model){
+    public String contactPage(Model model, Authentication auth){
+        Boolean userLoggedIn = !Objects.isNull(auth);
 
         WebsiteCardsList wscl = restTemplate.getForObject("http://localhost:8081/websitecards/getactivecardsforpage/contact", WebsiteCardsList.class);
         model.addAttribute("contactCards",wscl.getWebsiteCardList());
+        model.addAttribute("userLoggedIn",userLoggedIn);
 
         return"contact";
     }
 
 
     @RequestMapping("/about")
-    public String aboutPage(Model model){
+    public String aboutPage(Model model, Authentication auth){
+        Boolean userLoggedIn = !Objects.isNull(auth);
 
         String siteContentURL = "http://localhost:8081//webContent/getPageContent/"+"about";
         WebSiteContentList wscl = restTemplate.getForObject(siteContentURL, WebSiteContentList.class);
@@ -193,20 +230,21 @@ public class WebinterfaceController {
         model.addAttribute("missionContent",aboutMissionBody.getContentText());
         model.addAttribute("solutionTitle",aboutSolutionTitle.getContentText());
         model.addAttribute("solutionContent",aboutSolutionBody.getContentText());
+        model.addAttribute("userLoggedIn",userLoggedIn);
 
         return "about";
     }
 
     @RequestMapping("/faq")
-    public String faqPage(Model model){
+    public String faqPage(Model model, Authentication auth){
+        Boolean userLoggedIn = !Objects.isNull(auth);
 
         //Get all active faqs
         String allActiveFaqUrl =  "http://localhost:8081/faq/getAllActive";
         FaqWrapper activeFaqs =  restTemplate.getForObject(allActiveFaqUrl, FaqWrapper.class);
 
-
-
         model.addAttribute("faqList",activeFaqs.getFaqList());
+        model.addAttribute("userLoggedIn",userLoggedIn);
 
         return "faq";
     }
@@ -219,11 +257,31 @@ public class WebinterfaceController {
     }
 
     @RequestMapping("/login_user")
-    public String loginUserPage(Model model){
+    public String loginUserPage(Model model, Authentication auth){
+
+        //Get username of logged in user
+        String userName = auth.getName();
+        Boolean userLoggedIn = !Objects.isNull(auth);
+
+        Boolean isAdmin = false;
+        List<String> gl = new ArrayList<>();
+        if(!Objects.isNull(auth)){
+            auth.getAuthorities().forEach(a -> {gl.add(a.getAuthority());});
+        }
+        if(gl.size()>0){
+            for (String s:gl) {
+                if(s.equals("ADMINISTRATOR")){
+                    isAdmin=true;
+                }
+            }
+        }
+        System.out.println(isAdmin);
 
         //Get the users details
         String userDetailsUri = "http://localhost:8081//userDetails/getUserDetails/"+userName;
         UserDetails userDetails = restTemplate.getForObject(userDetailsUri, UserDetails.class);
+        Long userId = userDetails.getUserId();
+        globalUserId = userId;
 
         //Get status messages
         String webStatusURI = "http://localhost:8081/websiteStatus/getActiveStatusMessages";
@@ -267,6 +325,8 @@ public class WebinterfaceController {
             }
         }
 
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("userLoggedIn",userLoggedIn);
         model.addAttribute("latestQRCodesList",lastThreeCreated);
         model.addAttribute("qrDataList",qrDataList.getQrDataList());
         model.addAttribute("qrCodesList",qrDataList.getQrDataList());
@@ -279,10 +339,10 @@ public class WebinterfaceController {
     }
     @ResponseBody()
     @GetMapping(value = "/createQRCode/{plainText}/{tag}/{errorCorrectionLevel}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createQRCode(@PathVariable("plainText") String plainText, @PathVariable("tag")  String tag, @PathVariable("errorCorrectionLevel")  String eccLevel){
+    public ResponseEntity createQRCode(@PathVariable("plainText") String plainText, @PathVariable("tag")  String tag, @PathVariable("errorCorrectionLevel")  String eccLevel, Authentication auth){
 
 
-        String uri = "http://localhost:8070/qrdata/"+plainText+"/"+eccLevel+"/"+tag+"/"+userId;
+        String uri = "http://localhost:8070/qrdata/"+plainText+"/"+eccLevel+"/"+tag+"/"+globalUserId;
             try {
                 restTemplate.getForObject(uri, String.class);
                 return new ResponseEntity(HttpStatus.OK);

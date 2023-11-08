@@ -30,9 +30,14 @@
                             <li class="nav-item"><a class="nav-link" th:href="@{home}">Home</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" th:href="@{login}">Login</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
-
+                            <div th:if="${userLoggedIn}">
+                                <li class="nav-item"><a class="nav-link" th:href="@{login_user}">My Account</a></li>
+                            </div>
+                            <div th:if="${isAdmin}">
+                                <li class="nav-item"><a class="nav-link" th:href="@{admin}">Admin</a></li>
+                            </div>
+                            <li class="nav-item"><a class="nav-link" th:href="@{userLoggedIn} ? login : logout" th:text="${userLoggedIn} ? 'Sign out':'Login'">Option</a></li>
                         </ul>
                         </li>
                         </ul>

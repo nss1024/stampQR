@@ -25,7 +25,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-  <script src="js/customScripts.js" defer></script>
+  <script src="js/customScripts/customScripts.js" defer></script>
 
   <main class="flex-shrink-0">
     <!-- Navigation-->
@@ -40,9 +40,11 @@
             <li class="nav-item"><a class="nav-link" th:href="@{home}">Home</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{login}">Login</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
-
+            <li class="nav-item"><a class="nav-link" th:href="@{userLoggedIn} ? login : logout" th:text="${userLoggedIn} ? 'Sign out':'Login'">Option</a></li>
+            <div th:if="${isAdmin}">
+              <li class="nav-item"><a class="nav-link" th:href="@{admin}">Admin</a></li>
+            </div>
           </ul>
           </li>
           </ul>
