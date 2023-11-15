@@ -21,10 +21,8 @@ public class SecurityUserDetailsService implements UserDetailsService {
     RestTemplate restTemplate = new RestTemplate();
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         String usersURL = "http://localhost:8081/users/getUserByUsername/"+username;
         Users u = restTemplate.getForObject(usersURL, Users.class);
-
         String authoritiesURL = "http://localhost:8081/authorities/getAuthoritiesByUsername/"+username;
         AuthoritiesList al = restTemplate.getForObject(authoritiesURL, AuthoritiesList.class);
 

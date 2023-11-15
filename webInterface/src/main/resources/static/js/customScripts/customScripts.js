@@ -1,3 +1,5 @@
+const baseURL= "";
+
 function createNewMobileUser(creatingUserId) {
     var valid = true;
     var formTextElements = [

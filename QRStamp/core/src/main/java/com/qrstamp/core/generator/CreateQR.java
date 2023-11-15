@@ -124,7 +124,7 @@ public class CreateQR {
     }
 
     private String generateQRImageFile(BufferedImage img, int userId ){
-        String filePath = "C:\\Users\\nsimo\\Documents\\StampQRFiles\\QRCodeImages\\";
+        String filePath = "C:\\StampQRFiles\\QRCodeImages\\";
         String imgFileExtension = "png";
         String imgFileName = Integer.toString(userId)+"_"+System.currentTimeMillis();
         String imgFilePath = "";

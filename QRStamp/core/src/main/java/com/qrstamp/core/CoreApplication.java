@@ -1,8 +1,8 @@
 package com.qrstamp.core;
 
-import com.qrstamp.core.generator.CreateQR;
-import com.qrstamp.core.generator.QRRequestresponseObject;
+import com.qrstamp.core.generator.*;
 import jakarta.annotation.Resource;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -14,19 +14,15 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
@@ -40,6 +36,9 @@ public class CoreApplication {
 	@Autowired
 	CreateQR createQR;
 
+	@Autowired
+	CreateGcode createGcode;
+
 	RestTemplate restTemplate = new RestTemplate();
 	QRRequestresponseObject qrRequestresponseObject;
 
@@ -51,42 +50,70 @@ public class CoreApplication {
 
 	@CrossOrigin
 	@GetMapping("/qrdata/{textToEncode}/{errorCorrectionLevel}/{tag}/{userId}")
-	public String getQRData(@PathVariable ("textToEncode") String textToEncode, @PathVariable("errorCorrectionLevel") String errorCorrectionLevel,
+	public ResponseEntity getQRData(@PathVariable ("textToEncode") String textToEncode, @PathVariable("errorCorrectionLevel") String errorCorrectionLevel,
 											 @PathVariable("tag") String tag, @PathVariable("userId") Long userId){
+		try {
+			createQR.setTextToEncode(textToEncode);
+			createQR.setECCLvl(errorCorrectionLevel);
+			qrRequestresponseObject = createQR.getResponseData();
+			qrRequestresponseObject.setEncodedText(createGcode.generateGCode(qrRequestresponseObject.getEncodedText(), 1.0, 2.0));
 
-		createQR.setTextToEncode(textToEncode);
-		createQR.setECCLvl(errorCorrectionLevel);
-		qrRequestresponseObject = createQR.getResponseData();
+			String uri = "http://localhost:8081/qrdata/save/" + qrRequestresponseObject.getTextToEncode() + "/" + qrRequestresponseObject.getEncodedText() + "/" + errorCorrectionLevel + "/" +
+					tag + "/" + qrRequestresponseObject.getImg() + "/" + qrRequestresponseObject.getVersion() + "/" + userId + "/" + "true";
 
-		String uri ="http://localhost:8081/qrdata/save/"+qrRequestresponseObject.getTextToEncode()+"/"+qrRequestresponseObject.getEncodedText()+"/"+errorCorrectionLevel+"/"+
-				tag+"/"+qrRequestresponseObject.getImg()+"/"+qrRequestresponseObject.getVersion()+"/"+userId+"/"+"true";
+			System.out.println(uri);
 
-		System.out.println(uri);
+			restTemplate.getForObject(uri, Objects.class);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-		restTemplate.getForObject(uri, Objects.class);
+	}
 
-		return "success";
+	@GetMapping("/qrdata/produceQrCode/{textToEncode}/{errorCorrectionLevel}/{tag}/{userId}")
+	public ResponseEntity produceQRData(@PathVariable ("textToEncode") String textToEncode, @PathVariable("errorCorrectionLevel") String errorCorrectionLevel,
+							@PathVariable("tag") String tag, @PathVariable("userId") Long userId){
+
+		String stampConfigURL = "http://localhost:8081/stampConfig/getStampConfig/"+1;
+		StampConfig stampConfig = restTemplate.getForObject(stampConfigURL, StampConfig.class);
+
+		if(Objects.isNull(stampConfig)){
+			stampConfig = new StampConfig();
+			stampConfig.setConfigName("Default");
+			stampConfig.setId(1L);
+			stampConfig.setStampHeight(4.0);
+			stampConfig.setStampWidth(21.0);
+			stampConfig.setStampFrameWidth(0.5);
+			stampConfig.setPixelDistance(1.0);
+			stampConfig.setPixelSize(1.0);
+
+		}
+
+		try {
+			createQR.setTextToEncode(textToEncode);
+			createQR.setECCLvl(errorCorrectionLevel);
+			qrRequestresponseObject = createQR.getResponseData();
+			qrRequestresponseObject.setEncodedText(createGcode.generateGCode(qrRequestresponseObject.getEncodedText(), stampConfig.getPixelDistance(), stampConfig.getStampHeight()));
+			String uri = "http://localhost:8081/qrdata/save2/" + tag + "/" + userId + "/" + true;
+			restTemplate.postForEntity(uri, qrRequestresponseObject, Object.class);
+			return new ResponseEntity(HttpStatus.OK);
+		}catch (Exception e){
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+
 	}
 
 
 
-	@GetMapping( value = "/image", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<ByteArrayResource> getQRImage() throws IOException {
-		final ByteArrayResource bar = new ByteArrayResource(Files.readAllBytes(Paths.get("C:\\Users\\nsimo\\Documents\\QRCode\\JD.png")));
-
-		createQR.setTextToEncode("a");
-		createQR.setECCLvl("L");
-		qrRequestresponseObject = createQR.getResponseData();
-
-		System.out.println(qrRequestresponseObject.getEncodedText());
-		System.out.println(qrRequestresponseObject.getVersion());
-
-
-		return ResponseEntity
-				.status(HttpStatus.OK)
-				.contentLength(bar.contentLength())
-				.body(bar);
-
+	@GetMapping(value = "/images/{imageName}")
+	public ImageWrapper getImage(@PathVariable("imageName") String imageName) throws IOException {
+		File file = ResourceUtils.getFile("C:\\StampQRFiles\\QRCodeImages\\"+imageName);
+		InputStream in = new FileInputStream(file);
+		ImageWrapper imageWrapper = new ImageWrapper();
+		imageWrapper.setImageByteArray(IOUtils.toByteArray(in));
+		return imageWrapper;
 	}
 
 }

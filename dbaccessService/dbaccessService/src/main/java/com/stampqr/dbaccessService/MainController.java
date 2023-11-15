@@ -58,6 +58,9 @@ public class MainController {
     @Autowired
     FaqServiceImpl faqService;
 
+    @Autowired
+    StampConfigServiceImpl stampConfigService;
+
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
 
     @PostMapping(value="/users/adduser/{userName}/{password}")
@@ -167,6 +170,23 @@ public class MainController {
 
         qrDataService.saveQRData(qrData);
 
+    }
+
+    @PostMapping(value="/qrdata/save2/{qRDataTag}/{userId}/{active}")
+    public void saveQRData2(@RequestBody QRRequestresponseObject qrRequestresponseObject, @PathVariable("qRDataTag") String qRDataTag,@PathVariable("userId") Long userId, @PathVariable("active") Boolean active){
+
+        if(Objects.nonNull(qrRequestresponseObject)){
+            QRData qrData = new QRData();
+            qrData.setPlainText(qrRequestresponseObject.getTextToEncode());
+            qrData.setEncodedText(qrRequestresponseObject.getEncodedText());
+            qrData.setErrorCorrectionLevel(qrRequestresponseObject.getError());
+            qrData.setQrDataTag(qRDataTag);
+            qrData.setImageURL(qrRequestresponseObject.getImg());
+            qrData.setVer((long)qrRequestresponseObject.getVersion());
+            qrData.setUserId(userId);
+            qrData.setActive(active);
+            qrDataService.saveQRData(qrData);
+        }
     }
 
     @PostMapping(value="/qrData/deleteQRCode/{id}")
@@ -417,6 +437,10 @@ public class MainController {
         }
         qrDataList.setQrDataList(qrDataArrayList);
         return qrDataList;
+    }
+    @GetMapping(value="stampConfig/getStampConfig/{id}")
+    public StampConfig getStampConfig(@PathVariable(name="id") Long id){
+        return stampConfigService.getStampConfig(id);
     }
 
 

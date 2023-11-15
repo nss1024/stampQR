@@ -1,5 +1,7 @@
 //console.log('Admin page here!');
 
+const baseURL="";
+
 function addNewCustomer() {
     var valid = true;
     var formTextElements = [

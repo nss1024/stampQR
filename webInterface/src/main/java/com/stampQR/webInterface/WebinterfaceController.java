@@ -29,15 +29,11 @@ public class WebinterfaceController {
 
     @Autowired
     RestTemplate restTemplate;
-
-    //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-    //****************Mock user details*********************
-
-    Long globalUserId = 0L;
+    Long globalUserId = 0L; // used when creating the QR code
+    String baseURL="";
 
 
-    //******************************************************
+
     @GetMapping(value="/login")
     public String loginPage(){
         return "login";
@@ -59,7 +55,7 @@ public class WebinterfaceController {
                 }
             }
         }
-        System.out.println(isAdmin);
+        //System.out.println(isAdmin);
 
 
         String siteContentURL = "http://localhost:8081/webContent/getPageContent/"+"index";
@@ -108,7 +104,7 @@ public class WebinterfaceController {
         String userDetailsWebListUri = "http://localhost:8081/userDetails/getAllUserDetails";
         UserDetailsWebList udwl = restTemplate.getForObject(userDetailsWebListUri, UserDetailsWebList.class);
         List<UserDetailsWeb> userDetailsWList = udwl.getUserDetailsWebList();
-        System.out.println(userDetailsWList.size());
+        //System.out.println(userDetailsWList.size());
 
         //Get loggedin user details
         String userDetailsUri = "http://localhost:8081//userDetails/getUserDetails/"+userName;
@@ -177,7 +173,7 @@ public class WebinterfaceController {
 
         String siteContentURL = "http://localhost:8081//webContent/getPageContent/"+"about";
         WebSiteContentList wscl = restTemplate.getForObject(siteContentURL, WebSiteContentList.class);
-        System.out.println(wscl.getWebSiteContentList().size());
+        //System.out.println(wscl.getWebSiteContentList().size());
         WebSiteContent aboutTitle=null;
         WebSiteContent aboutSubTitle=null;
         WebSiteContent aboutIdeaTitle=null;
@@ -275,7 +271,7 @@ public class WebinterfaceController {
                 }
             }
         }
-        System.out.println(isAdmin);
+        //System.out.println(isAdmin);
 
         //Get the users details
         String userDetailsUri = "http://localhost:8081//userDetails/getUserDetails/"+userName;
@@ -342,7 +338,7 @@ public class WebinterfaceController {
     public ResponseEntity createQRCode(@PathVariable("plainText") String plainText, @PathVariable("tag")  String tag, @PathVariable("errorCorrectionLevel")  String eccLevel, Authentication auth){
 
 
-        String uri = "http://localhost:8070/qrdata/"+plainText+"/"+eccLevel+"/"+tag+"/"+globalUserId;
+        String uri = "http://localhost:8070/qrdata/produceQrCode/"+plainText+"/"+eccLevel+"/"+tag+"/"+globalUserId;
             try {
                 restTemplate.getForObject(uri, String.class);
                 return new ResponseEntity(HttpStatus.OK);

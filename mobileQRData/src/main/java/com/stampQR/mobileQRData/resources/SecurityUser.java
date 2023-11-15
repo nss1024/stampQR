@@ -22,9 +22,9 @@ public class SecurityUser implements UserDetails {
         List<GrantedAuthority>authorities=new ArrayList<>();
         for (MobileAuthorities ma: mal) {
             authorities.add(new SimpleGrantedAuthority(ma.getAuthority()));
-            System.out.println(ma.getAuthority());
+            //System.out.println(ma.getAuthority());
         }
-        System.out.println(mu.getUsername()+" "+mu.getPassword());
+        //System.out.println(mu.getUsername()+" "+mu.getPassword());
         return authorities;
     }
 
