@@ -312,7 +312,7 @@ public class MainController {
 
     @PostMapping(value="/user/createNewuser/{userName}/{password}")
     public void createNewUser(@PathVariable("userName") String userName,@PathVariable("password") String password){
-        usersService.saveNewUser(userName,password);
+        usersService.saveNewUser(userName,passwordEncoder.encode(password));
         authoritiesService.setAuthority("USER",userName);
     }
 

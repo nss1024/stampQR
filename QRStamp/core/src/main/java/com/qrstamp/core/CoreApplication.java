@@ -1,5 +1,5 @@
 package com.qrstamp.core;
-
+//10.0.1.126:8081
 import com.qrstamp.core.generator.*;
 import jakarta.annotation.Resource;
 import org.apache.commons.io.IOUtils;
@@ -58,7 +58,7 @@ public class CoreApplication {
 			qrRequestresponseObject = createQR.getResponseData();
 			qrRequestresponseObject.setEncodedText(createGcode.generateGCode(qrRequestresponseObject.getEncodedText(), 1.0, 2.0));
 
-			String uri = "http://localhost:8081/qrdata/save/" + qrRequestresponseObject.getTextToEncode() + "/" + qrRequestresponseObject.getEncodedText() + "/" + errorCorrectionLevel + "/" +
+			String uri = "http://10.0.1.126:8081/qrdata/save/" + qrRequestresponseObject.getTextToEncode() + "/" + qrRequestresponseObject.getEncodedText() + "/" + errorCorrectionLevel + "/" +
 					tag + "/" + qrRequestresponseObject.getImg() + "/" + qrRequestresponseObject.getVersion() + "/" + userId + "/" + "true";
 
 			System.out.println(uri);
@@ -75,9 +75,13 @@ public class CoreApplication {
 	public ResponseEntity produceQRData(@PathVariable ("textToEncode") String textToEncode, @PathVariable("errorCorrectionLevel") String errorCorrectionLevel,
 							@PathVariable("tag") String tag, @PathVariable("userId") Long userId){
 
-		String stampConfigURL = "http://localhost:8081/stampConfig/getStampConfig/"+1;
-		StampConfig stampConfig = restTemplate.getForObject(stampConfigURL, StampConfig.class);
-
+		StampConfig stampConfig=null;
+		try {
+			String stampConfigURL = "http://10.0.1.126:8081/stampConfig/getStampConfig/" + 1;
+			stampConfig = restTemplate.getForObject(stampConfigURL, StampConfig.class);
+		}catch(Exception e){
+			System.out.println("Error getting stamp configuration!");
+		}
 		if(Objects.isNull(stampConfig)){
 			stampConfig = new StampConfig();
 			stampConfig.setConfigName("Default");
@@ -95,7 +99,8 @@ public class CoreApplication {
 			createQR.setECCLvl(errorCorrectionLevel);
 			qrRequestresponseObject = createQR.getResponseData();
 			qrRequestresponseObject.setEncodedText(createGcode.generateGCode(qrRequestresponseObject.getEncodedText(), stampConfig.getPixelDistance(), stampConfig.getStampHeight()));
-			String uri = "http://localhost:8081/qrdata/save2/" + tag + "/" + userId + "/" + true;
+			qrRequestresponseObject.setError(errorCorrectionLevel);
+			String uri = "http://10.0.1.126:8081/qrdata/save2/" + tag + "/" + userId + "/" + true;
 			restTemplate.postForEntity(uri, qrRequestresponseObject, Object.class);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch (Exception e){

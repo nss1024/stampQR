@@ -1,5 +1,5 @@
 package com.stampQR.ImageFileServer;
-
+//10.0.1.20:8070
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,15 @@ import java.io.InputStream;
 
 @Controller
 public class MainController {
-
+    String img = "";
     RestTemplate restTemplate = new RestTemplate();
     @GetMapping(value = "/images/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] getImage(@PathVariable("imageName") String imageName) throws IOException {
-        String imageUrl = "http://localhost:8070/images/"+imageName;
+        if(!imageName.contains(".png")){
+            img=imageName+".png";
+        }else{img=imageName;}
+
+        String imageUrl = "http://10.0.1.20:8070/images/"+img;
         ImageWrapper imageWrapper = restTemplate.getForObject(imageUrl, ImageWrapper.class);
         return imageWrapper.getImageByteArray();
     }

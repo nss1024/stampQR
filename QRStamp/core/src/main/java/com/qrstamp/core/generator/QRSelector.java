@@ -23,18 +23,13 @@ private Map<Integer, Integer> H_CODES = new HashMap<>();
     }
 
     public int getQRCodeSizeForText(String textToEncode, String errorCorrectionLevel){
-
         int result = getVersionByTextSize(getTextSize(textToEncode),getMapByECC(errorCorrectionLevel));
-
         return result;
     }
-
     private int getTextSize(String s){
 
         return s.length();
-
     }
-
     private int getVersionByTextSize(int txtSize, Map<Integer,Integer> codes){
 
         int key=0;
@@ -49,10 +44,8 @@ private Map<Integer, Integer> H_CODES = new HashMap<>();
                 break;
             }
         }
-
         result = codes.get(key);
         System.out.println("QR Code version to use is: "+result);
-
         return result;
     }
 

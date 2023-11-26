@@ -1,5 +1,5 @@
 package com.stampQR.mobileQRData;
-
+//10.0.1.126:8081
 import com.stampQR.mobileQRData.resources.QRData;
 import com.stampQR.mobileQRData.utils.NumGCode;
 import com.stampQR.mobileQRData.wrapperClasses.QRDataList;
@@ -24,7 +24,7 @@ public class MainController {
     public QRDataList getQRData(@PathVariable("username") String username){
 
 
-        String qruri = "http://localhost:8081/qrData/getCodesForMobileUser/"+username;
+        String qruri = "http://10.0.1.126:8081/qrData/getCodesForMobileUser/"+username;
         QRDataList qrDataList = restTemplate.getForObject(qruri, QRDataList.class);
 
         if(Objects.nonNull(qrDataList)) {
@@ -50,6 +50,15 @@ public class MainController {
         }
         return  qrDataList;
 
+    }
+
+    @GetMapping(value="/api/gcode/getAllDataByUserId/{userId}")
+    public QRDataList getQRDataByUserId(@PathVariable("userId") Long id){
+
+        String qruri = "http://10.0.1.126:8081/qrData/getAllDataByUserId/"+id;
+        QRDataList qrDataList = restTemplate.getForObject(qruri, QRDataList.class);
+
+        return  qrDataList;
     }
 
 

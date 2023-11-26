@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProcessData">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:id="@+id/processQrImage"
+        android:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/processPlainText"
+        android:layout_below="@id/processQrImage"
+        android:layout_margin="10dp"
+        android:text="Plaintext placeholder"
+        android:layout_centerHorizontal="true"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/processPlainText"
+        android:layout_centerHorizontal="true"
+        android:text="Connect to encoder"
+        android:layout_margin="30dp"
+        android:id="@+id/connectToEncoderBtn"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/connectToEncoderBtn"
+        android:layout_centerHorizontal="true"
+        android:text="Create stamp"
+        android:layout_margin="20dp"
+        android:id="@+id/createStampBtn"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/showEncoderResponse"
+        android:layout_below="@id/createStampBtn"
+        android:layout_margin="10dp"
+        android:text="Encoder response"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/showDevices"
+        android:layout_below="@+id/showEncoderResponse"
+        android:layout_margin="10dp"
+        android:text="Available Bluetooth deices:"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

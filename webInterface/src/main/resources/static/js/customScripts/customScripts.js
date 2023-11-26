@@ -31,12 +31,12 @@ function createNewMobileUser(creatingUserId) {
     }
 
     if (valid) {
-        var uri = "http://localhost:8081/mobileUsers/addNewUser/" + formTextElements[0] + "/" + formTextElements[1];
+        var uri = "http://18.133.86.241:8080/mobileUsers/addNewUser/" + formTextElements[0] + "/" + formTextElements[1];
         $.post(uri, {},
             function (data, status) {
                 //console.log(data+"  "+status);
                 if (status == "success") {
-                    var uri2 = "http://localhost:8081/mobileUserDetails/addNewDetails/" + formTextElements[0] + "/" + formTextElements[2] + "/" + formTextElements[3] + "/" + mobileEmail + "/" + formTextElements[4] + "/" + creatingUserId + "/" + true;
+                    var uri2 = "http://18.133.86.241:8080/mobileUserDetails/addNewDetails/" + formTextElements[0] + "/" + formTextElements[2] + "/" + formTextElements[3] + "/" + mobileEmail + "/" + formTextElements[4] + "/" + creatingUserId + "/" + true;
                     $.post(uri2, {},
                         function (data, status) {
                             //console.log(data+"  "+status);
@@ -94,7 +94,7 @@ function updateUserDetails(thUserId, thFirstName, thLastName, thEmail, thCompany
     }
 
     if(validation){
-        var uri = "http://localhost:8081/userDetails/update/"+thUserId+"/"+formTextElements[2]+"/"+formTextElements[3]+"/"+email+"/"+formTextElements[4];
+        var uri = "http://18.133.86.241:8080/userDetails/update/"+thUserId+"/"+formTextElements[2]+"/"+formTextElements[3]+"/"+email+"/"+formTextElements[4];
         $.post(uri, {},
             function (data, status) {
                 //console.log(data+"  "+status);
@@ -138,7 +138,7 @@ function createNewQRCode() {
     }
 
     if (validation) {
-        var uri = "http://localhost:8090/createQRCode/" + qrPlainText + "/" + qrTag + "/" + selectedEccLevel;
+        var uri = "http://18.133.86.241:8080/createQRCode/" + qrPlainText + "/" + qrTag + "/" + selectedEccLevel;
         sendData(uri,"GET","createNewQRCodeModalBody","New QR code has been created!",'Operation failed!','Operation failed!');
         document.getElementById('textToEncode').value = "";
         document.getElementById('qrTag').value = "";        
@@ -220,7 +220,7 @@ function updateMobileUsersData() {
         for (let index = 0; index < dataToUpdate.length; index++) {
             dataToSend = dataToUpdate[index];
             try {
-                var uri2 = "http://localhost:8081/mobileUserDetails/updateDetails/" + dataToSend[1] + "/" + dataToSend[0] + "/" + dataToSend[2] + "/" + dataToSend[3] + "/" + dataToSend[4] + "/" + dataToSend[5] + "/" + dataToSend[6];
+                var uri2 = "http://18.133.86.241:8080/mobileUserDetails/updateDetails/" + dataToSend[1] + "/" + dataToSend[0] + "/" + dataToSend[2] + "/" + dataToSend[3] + "/" + dataToSend[4] + "/" + dataToSend[5] + "/" + dataToSend[6];
                 $.post(uri2, {},
                     function (data, status) {
                         //console.log(data+"  "+status);
@@ -287,13 +287,13 @@ function assignMobileUserToQRCode(mobileUserName, qrCodeId,element){
     
    
     if(assigned){
-        var uri1 = "http://localhost:8081/assingQrToMobileUser/"+mobileUserName+"/"+qrCodeId;
+        var uri1 = "http://18.133.86.241:8080/assingQrToMobileUser/"+mobileUserName+"/"+qrCodeId;
         sendData(uri1,"POST","manageQRCodesModal","QR code assigned!",'Operation failed!','Operation failed!');
     }        
 
    
     if(!assigned){
-        var uri2 = "http://localhost:8081/deleteQrToMobileUser/"+mobileUserName+"/"+qrCodeId;
+        var uri2 = "http://18.133.86.241:8080/deleteQrToMobileUser/"+mobileUserName+"/"+qrCodeId;
         sendData(uri2,"POST","manageQRCodesModal","QR code unassigned!",'Operation failed!','Operation failed!');
     }
     if(element.name=="mobileUserRC"){       
@@ -304,7 +304,7 @@ function assignMobileUserToQRCode(mobileUserName, qrCodeId,element){
 }
 
 function deleteExistingQRCodes(qrDataId, element){
-    var uri = "http://localhost:8081/qrData/deleteQRCode/"+qrDataId;
+    var uri = "http://18.133.86.241:8080/qrData/deleteQRCode/"+qrDataId;
     sendData(uri,"POST","manageQRCodesModal","QR code successfully deleted!",'Operation failed!','Operation failed!');        
     element.parentElement.parentElement.remove();
 }
@@ -312,7 +312,7 @@ function deleteExistingQRCodes(qrDataId, element){
 function changeQRCodeActiveStatus(qrCodeId, element){
     console.log(element.checked);
     console.log('QR code ID: '+qrCodeId);
-    var uri = "http://localhost:8081/qrData/updateActiveStatus/"+qrCodeId+"/"+element.checked;
+    var uri = "http://18.133.86.241:8080/qrData/updateActiveStatus/"+qrCodeId+"/"+element.checked;
     sendData(uri,"POST","manageQRCodesModal","QR code status updated!",'Operation failed!','Operation failed!');    
 }
 

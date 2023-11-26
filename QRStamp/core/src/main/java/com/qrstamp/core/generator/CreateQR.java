@@ -48,7 +48,8 @@ public class CreateQR {
 
 
 
-    private void createQRImage(String qrCodeText, int size, ErrorCorrectionLevel eccLvl, QRRequestresponseObject qrrro)
+    private void createQRImage(String qrCodeText, int size, ErrorCorrectionLevel eccLvl,
+                               QRRequestresponseObject qrrro)
             throws WriterException, IOException {
         // Create the ByteMatrix for the QR-Code that encodes the given String
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
@@ -63,18 +64,18 @@ public class CreateQR {
         Graphics2D graphics = (Graphics2D) image.getGraphics();
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, matrixWidth*40, matrixWidth*40);
-        System.out.println("Matrix width: "+matrixWidth);
+        //System.out.println("Matrix width: "+matrixWidth);
         // Paint and save the image using the ByteMatrix
         graphics.setColor(Color.BLACK);
 
         for (int i = 0; i < matrixWidth; i++) {
-            System.out.println();
+            //System.out.println();
             for (int j = 0; j < matrixWidth; j++) {
                 if (byteMatrix.get(i, j)) {
                     graphics.fillRect(i, j, 1, 1);
-                    System.out.print("X");
+                    //System.out.print("X");
                 }else{
-                    System.out.print(" ");
+                    //System.out.print(" ");
                 }
             }
         }

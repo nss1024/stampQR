@@ -5,11 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NumGCode {
-    private float xCoordCode = 100;
-    private float yCoordCode = 200;
-    private float zCoordCode = 300;
-    private float G21 = 921;
-    private float G90 = 990;
 
     private float[] numericGCode;
 

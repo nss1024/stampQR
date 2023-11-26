@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:id="@+id/qrImg"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Tag"
+            android:textStyle="bold"
+            android:id="@+id/qrTag"
+            android:layout_toRightOf="@+id/qrImg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="3dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECC"
+            android:textStyle="bold"
+            android:id="@+id/qrEcc"
+            android:layout_toRightOf="@+id/qrImg"
+            android:layout_below="@+id/qrTag"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="3dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Version"
+            android:textStyle="bold"
+            android:id="@+id/qrVersion"
+            android:layout_toRightOf="@+id/qrImg"
+            android:layout_below="@+id/qrEcc"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="3dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:text="Create"
+            android:id="@+id/createBtn"
+            android:layout_margin="3dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:text="Content"
+            android:id="@+id/contentBtn"
+            android:layout_margin="3dp"
+            android:layout_below="@+id/createBtn"
+            />
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

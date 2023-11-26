@@ -13,7 +13,8 @@ public class FaqServiceImpl implements FaqService{
     @Autowired
     private FaqRepository faqRepository;
     @Override
-    public void createNewFaq(String question, String answer, String category, Boolean active) {
+    public void createNewFaq(String question, String answer,
+                             String category, Boolean active) {
         FAQ faq = new FAQ();
         faq.setQuestion(question);
         faq.setAnswer(answer);

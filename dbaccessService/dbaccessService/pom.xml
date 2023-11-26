@@ -13,6 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dbaccessService</name>
 	<description>stampQR Database access service</description>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -52,6 +53,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>dbAccessService</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -63,6 +65,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<executable>true</executable>
 				</configuration>
 			</plugin>
 		</plugins>

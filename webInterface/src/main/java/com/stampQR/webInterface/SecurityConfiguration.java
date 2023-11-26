@@ -27,7 +27,8 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/css/**").permitAll();
                     auth.requestMatchers("/js/**").permitAll();
                     auth.requestMatchers("/assets/**").permitAll();
-                    auth.requestMatchers("/js/customScripts/customScripts.js").hasAnyAuthority("ADMINISTRATOR","USER");
+                    auth.requestMatchers("/js/customScripts/customScripts.js")
+                            .hasAnyAuthority("ADMINISTRATOR","USER");
                     auth.requestMatchers("/js/customScripts/**").hasAuthority("ADMINISTRATOR");
                     auth.requestMatchers("/").permitAll();
                     auth.requestMatchers("/home").permitAll();
@@ -38,7 +39,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/admin").hasAuthority("ADMINISTRATOR");
                     auth.anyRequest().authenticated();
                 })
-                .userDetailsService(myUserDetailsService)//Customizer.withDefaults()
+                .userDetailsService(myUserDetailsService)
                 .formLogin(form ->{
                     form.loginPage("/login")
                             .permitAll();

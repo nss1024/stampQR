@@ -1,4 +1,7 @@
 package com.stampQR.webInterface;
+//DB : 10.0.1.126:8081
+//App: 10.0.1.20:8070
+//Image: localhost:8000
 
 import com.stampQR.webInterface.WrapperClasses.*;
 import com.stampQR.webInterface.data.IndexContent;
@@ -58,7 +61,7 @@ public class WebinterfaceController {
         //System.out.println(isAdmin);
 
 
-        String siteContentURL = "http://localhost:8081/webContent/getPageContent/"+"index";
+        String siteContentURL = "http://10.0.1.126:8081/webContent/getPageContent/"+"index";
         WebSiteContentList wscl = restTemplate.getForObject(siteContentURL, WebSiteContentList.class);
 
         model.addAttribute("isAdmin",isAdmin);
@@ -98,27 +101,27 @@ public class WebinterfaceController {
         restTemplate = new RestTemplate();
 
         //Get Website content
-        WebSiteContentList wscl = restTemplate.getForObject("http://localhost:8081/webContent/getPageContent/admin", WebSiteContentList.class);
+        WebSiteContentList wscl = restTemplate.getForObject("http://10.0.1.126:8081/webContent/getPageContent/admin", WebSiteContentList.class);
 
         //Get user details (web)
-        String userDetailsWebListUri = "http://localhost:8081/userDetails/getAllUserDetails";
+        String userDetailsWebListUri = "http://10.0.1.126:8081/userDetails/getAllUserDetails";
         UserDetailsWebList udwl = restTemplate.getForObject(userDetailsWebListUri, UserDetailsWebList.class);
         List<UserDetailsWeb> userDetailsWList = udwl.getUserDetailsWebList();
         //System.out.println(userDetailsWList.size());
 
         //Get loggedin user details
-        String userDetailsUri = "http://localhost:8081//userDetails/getUserDetails/"+userName;
+        String userDetailsUri = "http://10.0.1.126:8081//userDetails/getUserDetails/"+userName;
         UserDetails userDetails = restTemplate.getForObject(userDetailsUri, UserDetails.class);
         Long userId = userDetails.getUserId();
         globalUserId = userId;
 
         //Get mobile users
-        String mobileUsersUri = "http://localhost:8081/mobileUserDetails/getAll";
+        String mobileUsersUri = "http://10.0.1.126:8081/mobileUserDetails/getAll";
         MobileUsersDetailsWraper mobileUserDetailsWraper = restTemplate.getForObject(mobileUsersUri, MobileUsersDetailsWraper.class);
         List<MobileUserDetails> mobileUserDetailsList = mobileUserDetailsWraper.getMobileUserDetailsList();
 
         //Get all status messages
-        String webStatusURI = "http://localhost:8081/websiteStatus/getAll";
+        String webStatusURI = "http://10.0.1.126:8081/websiteStatus/getAll";
         WebStatusMessageList webStatusMessageList = restTemplate.getForObject(webStatusURI, WebStatusMessageList.class);
         List<WebStatusMessage> allWebStatusMessages = webStatusMessageList.getWebStatusMessages();
         //cerate a list of active messages to show when the page loads
@@ -130,15 +133,15 @@ public class WebinterfaceController {
         }
 
         //Get all webcontent data
-        String allWebContentURL = "http://localhost:8081/webContent/getAllWebsiteContent";
+        String allWebContentURL = "http://10.0.1.126:8081/webContent/getAllWebsiteContent";
         WebSiteContentList wsclAll = restTemplate.getForObject(allWebContentURL, WebSiteContentList.class);
 
         //Get all cards
-        String wsCardsAllUrl = "http://localhost:8081/websitecards/getAllCards";
+        String wsCardsAllUrl = "http://10.0.1.126:8081/websitecards/getAllCards";
         WebsiteCardsList wsCardsAll = restTemplate.getForObject(wsCardsAllUrl, WebsiteCardsList.class);
 
         //Get all faqs
-        String allFaqUrl =  "http://localhost:8081/faq/getAllFaq";
+        String allFaqUrl =  "http://10.0.1.126:8081/faq/getAllFaq";
         FaqWrapper faqw =  restTemplate.getForObject(allFaqUrl, FaqWrapper.class);
 
 
@@ -159,7 +162,7 @@ public class WebinterfaceController {
     public String contactPage(Model model, Authentication auth){
         Boolean userLoggedIn = !Objects.isNull(auth);
 
-        WebsiteCardsList wscl = restTemplate.getForObject("http://localhost:8081/websitecards/getactivecardsforpage/contact", WebsiteCardsList.class);
+        WebsiteCardsList wscl = restTemplate.getForObject("http://10.0.1.126:8081/websitecards/getactivecardsforpage/contact", WebsiteCardsList.class);
         model.addAttribute("contactCards",wscl.getWebsiteCardList());
         model.addAttribute("userLoggedIn",userLoggedIn);
 
@@ -171,7 +174,7 @@ public class WebinterfaceController {
     public String aboutPage(Model model, Authentication auth){
         Boolean userLoggedIn = !Objects.isNull(auth);
 
-        String siteContentURL = "http://localhost:8081//webContent/getPageContent/"+"about";
+        String siteContentURL = "http://10.0.1.126:8081//webContent/getPageContent/"+"about";
         WebSiteContentList wscl = restTemplate.getForObject(siteContentURL, WebSiteContentList.class);
         //System.out.println(wscl.getWebSiteContentList().size());
         WebSiteContent aboutTitle=null;
@@ -236,7 +239,7 @@ public class WebinterfaceController {
         Boolean userLoggedIn = !Objects.isNull(auth);
 
         //Get all active faqs
-        String allActiveFaqUrl =  "http://localhost:8081/faq/getAllActive";
+        String allActiveFaqUrl =  "http://10.0.1.126:8081/faq/getAllActive";
         FaqWrapper activeFaqs =  restTemplate.getForObject(allActiveFaqUrl, FaqWrapper.class);
 
         model.addAttribute("faqList",activeFaqs.getFaqList());
@@ -274,37 +277,37 @@ public class WebinterfaceController {
         //System.out.println(isAdmin);
 
         //Get the users details
-        String userDetailsUri = "http://localhost:8081//userDetails/getUserDetails/"+userName;
+        String userDetailsUri = "http://10.0.1.126:8081//userDetails/getUserDetails/"+userName;
         UserDetails userDetails = restTemplate.getForObject(userDetailsUri, UserDetails.class);
         Long userId = userDetails.getUserId();
         globalUserId = userId;
 
         //Get status messages
-        String webStatusURI = "http://localhost:8081/websiteStatus/getActiveStatusMessages";
+        String webStatusURI = "http://10.0.1.126:8081/websiteStatus/getActiveStatusMessages";
         WebStatusMessageList webStatusMessageList = restTemplate.getForObject(webStatusURI, WebStatusMessageList.class);
         List<WebStatusMessage> webStatusMessages = webStatusMessageList.getWebStatusMessages();
 
 
         //Get the last 3 QR codes created
-        String qruri = "http://localhost:8081/qrData/getAllDataByUserId/"+userId;
+        String qruri = "http://10.0.1.126:8081/qrData/getAllDataByUserId/"+userId;
         //Get QR codes relating to user
         QRDataList qrDataList = restTemplate.getForObject(qruri, QRDataList.class);
         Collections.reverse(qrDataList.getQrDataList());
 
-        String lastThreeQrUri = "http://localhost:8081/qrData/getLastThreeDataByUserId/"+userId;
+        String lastThreeQrUri = "http://10.0.1.126:8081/qrData/getLastThreeDataByUserId/"+userId;
         QRDataList lastThreeQRDatalist = restTemplate.getForObject(lastThreeQrUri, QRDataList.class);
         List<QRData> lastThreeCreated =  lastThreeQRDatalist.getQrDataList();
 
 
         //Get mobile users relating to user
-        String mobileUsersUri = "http://localhost:8081/mobileUserDetails/getUsersByCreatingUser/"+userId;
+        String mobileUsersUri = "http://10.0.1.126:8081/mobileUserDetails/getUsersByCreatingUser/"+userId;
         MobileUsersDetailsWraper mobileUserDetailsWraper = restTemplate.getForObject(mobileUsersUri, MobileUsersDetailsWraper.class);
         List<MobileUserDetails> mobileUserDetailsList = mobileUserDetailsWraper.getMobileUserDetailsList();
 
         //Get QR Code assignments
 
         for (QRData qrData:qrDataList.getQrDataList()) {
-            String qrDataAssignmentListUri = "http://localhost:8081/qrData/getAssignedUsers/"+qrData.getQrDataId();
+            String qrDataAssignmentListUri = "http://10.0.1.126:8081/qrData/getAssignedUsers/"+qrData.getQrDataId();
             QRDataAssignmentList qrDataAssignmentList = restTemplate.getForObject(qrDataAssignmentListUri, QRDataAssignmentList.class);
             if(qrDataAssignmentList.getMobileUserQRDataList()!=null){
                 for (MobileUserQRData muqd: qrDataAssignmentList.getMobileUserQRDataList()) {
@@ -338,7 +341,7 @@ public class WebinterfaceController {
     public ResponseEntity createQRCode(@PathVariable("plainText") String plainText, @PathVariable("tag")  String tag, @PathVariable("errorCorrectionLevel")  String eccLevel, Authentication auth){
 
 
-        String uri = "http://localhost:8070/qrdata/produceQrCode/"+plainText+"/"+eccLevel+"/"+tag+"/"+globalUserId;
+        String uri = "http://10.0.1.20:8070/qrdata/produceQrCode/"+plainText+"/"+eccLevel+"/"+tag+"/"+globalUserId;
             try {
                 restTemplate.getForObject(uri, String.class);
                 return new ResponseEntity(HttpStatus.OK);
@@ -347,5 +350,162 @@ public class WebinterfaceController {
             }
     }
 
+    /*********************************************************************************************************************************************************
+     **************************************************************     POST     *****************************************************************************
+    **********************************************************************************************************************************************************/
+
+    private ResponseEntity doUriPost(String uri) {
+        try {
+            //System.out.println("URI: " + uri);
+            restTemplate.postForEntity(uri, null, Object.class);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @PostMapping(value="/user/createNewuser/{userName}/{password}")
+    public ResponseEntity createNewUser(@PathVariable("userName") String userName,@PathVariable("password") String password){
+
+        return doUriPost("http://10.0.1.126:8081/user/createNewuser/" + userName + "/" + password);
+    }
+
+    @PostMapping(value="userDetails/createNewUser/{userName}/{fname}/{lname}/{email}/{company}")
+    public ResponseEntity createUserDetails(@PathVariable("userName") String username,@PathVariable("fname") String fName,@PathVariable("lname") String lName,@PathVariable("email") String email,@PathVariable("company") String company){
+
+        return doUriPost("http://10.0.1.126:8081/userDetails/createNewUser/" + username + "/" + fName+"/"+lName+"/"+email+"/"+company);
+
+    }
+
+    @PostMapping(value="/user/updateStatus/{username}/{currentStatus}")
+    public ResponseEntity changeUserEnabledStatus(@PathVariable("username") String userName,@PathVariable("currentStatus") Boolean currentStatus){
+        return doUriPost("http://10.0.1.126:8081/user/updateStatus/" + userName + "/" + currentStatus);
+    }
+
+    @PostMapping(value="/user/createAdminUser/{userName}/{isCurrentlyAdmin}")
+    public ResponseEntity createAdminUser(@PathVariable("userName") String userName,@PathVariable("isCurrentlyAdmin") Boolean isCurrentlyAdmin){
+        return doUriPost("http://10.0.1.126:8081/user/createAdminUser/" + userName + "/" + isCurrentlyAdmin);
+    }
+
+    @PostMapping(value="userDetails/update/{id}/{fname}/{lname}/{email}/{company}")
+    public ResponseEntity updateUserDetails(@PathVariable("id") Long id,@PathVariable("fname") String fName,@PathVariable("lname") String lName,@PathVariable("email") String email,@PathVariable("company") String company){
+
+        return doUriPost("http://10.0.1.126:8081/userDetails/update/" + id + "/" + fName+"/"+lName+"/"+email+"/"+company);
+
+    }
+
+    @PostMapping(value = "mobileUsers/addNewUser/{username}/{password}")
+    public ResponseEntity addUNewMobileUser(@PathVariable("username") String username,@PathVariable("password") String password){
+        return doUriPost("http://10.0.1.126:8081/mobileUsers/addNewUser/" + username + "/" + password);
+
+    }
+
+    @PostMapping(value="mobileUserDetails/addNewDetails/{username}/{fname}/{lname}/{email}/{company}/{creatingUserId}/{active}")
+    public ResponseEntity addNewMobileUserDetails(@PathVariable("username") String username,@PathVariable("fname") String fName,@PathVariable("lname") String lName,@PathVariable("email") String email,@PathVariable("company") String company,@PathVariable("creatingUserId") Long creatingUserId,@PathVariable("active") Boolean active ){
+        return doUriPost("http://10.0.1.126:8081/mobileUserDetails/addNewDetails/" + username + "/" + fName+"/"+lName+"/"+email+"/"+company+"/"+creatingUserId+"/"+active);
+    }
+
+    @PostMapping(value="mobileUserDetails/updateDetails/{id}/{username}/{fname}/{lname}/{email}/{company}/{active}")
+    public ResponseEntity updateMobileUserDetails(@PathVariable("id") Long id, @PathVariable("username") String username,@PathVariable("fname") String fName,@PathVariable("lname") String lName,@PathVariable("email") String email,@PathVariable("company") String company,@PathVariable("active") Boolean active ){
+        return doUriPost("http://10.0.1.126:8081/mobileUserDetails/updateDetails/"+id+"/" + username + "/" + fName+"/"+lName+"/"+email+"/"+company+"/"+active);
+    }
+
+    @PostMapping(value="/websiteStatus/createNewStatusMessage/{title}/{message}/{active}")
+    public ResponseEntity createNewStatusMessage(@PathVariable("title") String title, @PathVariable("message") String message, @PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/websiteStatus/createNewStatusMessage/" + title + "/" + message+"/"+active);
+    }
+
+    @PostMapping(value="/websiteStatus/updateWebStatusMessageStatus/{id}/{title}/{message}/{active}")
+    public ResponseEntity updateStatus (@PathVariable("id") Long id,@PathVariable("title") String title,@PathVariable("message") String message,@PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/websiteStatus/updateWebStatusMessageStatus/"+id+"/" + title + "/" + message+"/"+active);
+    }
+
+    @PostMapping(value="/websiteStatus/deleteStatusMessage/{id}")
+    public ResponseEntity deleteStatus(@PathVariable("id") Long id){
+        return doUriPost("http://10.0.1.126:8081/websiteStatus/deleteStatusMessage/"+id);
+
+    }
+
+    @PostMapping(value="webContent/addWebContent/{pageName}/{sectionName}/{sectionComponent}/{sectionSubcomponent}/{contentText}/{imageUrl}/{active}")
+    public ResponseEntity addWebSiteContent(@PathVariable("pageName") String pageName,@PathVariable("sectionName") String sectionName,@PathVariable("sectionComponent") String sectionComponent,
+                                  @PathVariable("sectionSubcomponent") String sectionSubcomponent,@PathVariable("contentText") String contentText,@PathVariable("imageUrl") String imageUrl,
+                                  @PathVariable("active") Boolean active){
+
+        return doUriPost("http://10.0.1.126:8081/webContent/addWebContent/"+pageName+"/"+sectionName+"/"+sectionComponent+"/"+sectionSubcomponent+"/"+contentText+"/"+imageUrl+"/"+active);
+
+    }
+
+    @PostMapping(value="/webContent/deleteWebsiteContent/{id}")
+    public ResponseEntity deleteWebsiteContent(@PathVariable("id") Long id){
+
+        return doUriPost("http://10.0.1.126:8081/webContent/deleteWebsiteContent/"+id);
+
+    }
+
+    @PostMapping(value="webContent/updateWebContent/{id}/{pageName}/{sectionName}/{sectionComponent}/{sectionSubcomponent}/{contentText}/{imageUrl}/{active}")
+    public ResponseEntity updateWebSiteContent(@PathVariable("id") Long id, @PathVariable("pageName") String pageName,@PathVariable("sectionName") String sectionName,@PathVariable("sectionComponent") String sectionComponent,
+                                     @PathVariable("sectionSubcomponent") String sectionSubcomponent,@PathVariable("contentText") String contentText,@PathVariable("imageUrl") String imageUrl,
+                                     @PathVariable("active") Boolean active){
+
+        return doUriPost("http://10.0.1.126:8081/webContent/updateWebContent/"+id+"/"+pageName+"/"+sectionName+"/"+sectionComponent+"/"+sectionSubcomponent+"/"+contentText+"/"+imageUrl+"/"+active);
+
+    }
+
+    @PostMapping(value="websitecards/addNewCard/{pageName}/{sectionName}/{image}/{title}/{text}/{active}")
+    public ResponseEntity addNewCard(@PathVariable("pageName")String pageName,@PathVariable("sectionName") String sectionName,@PathVariable("image")  String image,@PathVariable("title")  String title,@PathVariable("text") String text,@PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/websitecards/addNewCard/"+pageName+"/"+sectionName+"/"+image+"/"+title+"/"+text+"/"+active);
+    }
+
+    @PostMapping(value="/websitecards/deleteCard/{id}")
+    public ResponseEntity deleteCard(@PathVariable("id") Long id){
+
+        return doUriPost("http://10.0.1.126:8081/websitecards/deleteCard/"+id);
+
+    }
+
+    @PostMapping(value="/websitecards/updateCard/{id}/{pageName}/{sectionName}/{image}/{title}/{text}/{active}")
+    public ResponseEntity updateCard(@PathVariable("id") Long id, @PathVariable("pageName")String pageName,@PathVariable("sectionName") String sectionName,@PathVariable("image")  String image,@PathVariable("title")  String title,@PathVariable("text") String text,@PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/websitecards/updateCard/"+id+"/"+pageName+"/"+sectionName+"/"+image+"/"+title+"/"+text+"/"+active);
+    }
+
+    @PostMapping(value="/faq/addNewFaq/{question}/{answer}/{category}/{active}")
+    public ResponseEntity addNewFaq(@PathVariable("question") String question,@PathVariable("answer") String answer,@PathVariable("category") String category,@PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/faq/addNewFaq/"+question+"/"+answer+"/"+category+"/"+active);
+    }
+
+    @PostMapping(value="/faq/deleteFaq/{id}")
+    public ResponseEntity deleteFaq(@PathVariable("id") Long id){
+
+        return doUriPost("http://10.0.1.126:8081/faq/deleteFaq/"+id);
+
+    }
+
+    @PostMapping(value="/faq/updateFaq/{id}/{question}/{answer}/{category}/{active}")
+    public ResponseEntity updateFaq(@PathVariable("id") Long id, @PathVariable("question") String question,@PathVariable("answer") String answer,@PathVariable("category") String category,@PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/faq/updateFaq/"+id+"/"+question+"/"+answer+"/"+category+"/"+active);
+    }
+
+    @PostMapping(value="/assingQrToMobileUser/{mobileUserUserName}/{qrDataId}")
+    public ResponseEntity saveMobileUserQrDataAssignment(@PathVariable("mobileUserUserName") String mobileUserUserName,@PathVariable("qrDataId") Long qrDataId){
+        return doUriPost("http://10.0.1.126:8081/assingQrToMobileUser/"+mobileUserUserName+"/"+qrDataId);
+    }
+
+    @PostMapping(value="/deleteQrToMobileUser/{mobileUserUserName}/{qrDataId}")
+    public ResponseEntity deleteMobileUserQrDataAssignment(@PathVariable("mobileUserUserName") String mobileUserUserName,@PathVariable("qrDataId") Long qrDataId){
+        return doUriPost("http://10.0.1.126:8081/deleteQrToMobileUser/"+mobileUserUserName+"/"+qrDataId);
+    }
+
+    @PostMapping(value="/qrData/deleteQRCode/{id}")
+    public ResponseEntity deleteQrData(@PathVariable("id") Long id){
+
+        return doUriPost("http://10.0.1.126:8081/qrData/deleteQRCode/"+id);
+    }
+
+    @PostMapping(value="/qrData/updateActiveStatus/{id}/{active}")
+    public ResponseEntity updateQrDataActiveStatus(@PathVariable("id") Long id,@PathVariable("active") Boolean active){
+        return doUriPost("http://10.0.1.126:8081/qrData/updateActiveStatus/"+id+"/"+active);
+    }
 
 }

@@ -33,12 +33,12 @@ function addNewCustomer() {
     }
     try {
         if (valid) {
-            var uri = "http://localhost:8081/user/createNewuser/" + formTextElements[0] + "/" + formTextElements[1];
+            var uri = "http://18.133.86.241:8080/user/createNewuser/" + formTextElements[0] + "/" + formTextElements[1];
             $.post(uri, {},
                 function (data, status) {
                     //console.log(data+"  "+status);
                     if (status == "success") {
-                        var uri2 = "http://localhost:8081/userDetails/createNewUser/" + formTextElements[0] + "/" + formTextElements[2] + "/" + formTextElements[3] + "/" + customerEmail + "/" + formTextElements[4];
+                        var uri2 = "http://18.133.86.241:8080/userDetails/createNewUser/" + formTextElements[0] + "/" + formTextElements[2] + "/" + formTextElements[3] + "/" + customerEmail + "/" + formTextElements[4];
                         $.post(uri2, {},
                             function (data, status) {
                                 //console.log(data+"  "+status);
@@ -64,7 +64,7 @@ function addNewCustomer() {
 
 function toggleUserActive(username, element) {
     var elementStateBeforeClick = !element.checked;
-    var uri = "http://localhost:8081/user/updateStatus/" + username + "/" + elementStateBeforeClick;
+    var uri = "http://18.133.86.241:8080/user/updateStatus/" + username + "/" + elementStateBeforeClick;
     try {
         $.post(uri, {},
             function (data, status) {
@@ -82,7 +82,7 @@ function toggleUserActive(username, element) {
 
 function toggleUserAdmin(username, element) {
     var elementStateBeforeClick = !element.checked;
-    var uri = "http://localhost:8081/user/createAdminUser/" + username + "/" + elementStateBeforeClick;
+    var uri = "http://18.133.86.241:8080/user/createAdminUser/" + username + "/" + elementStateBeforeClick;
     try {
         $.post(uri, {},
             function (data, status) {
@@ -143,7 +143,7 @@ function updateCustomerData(){
         var dataToSend = customerDataToUpdate[i];
         if (validation) {
             try {
-                var uri2 = "http://localhost:8081/userDetails/update/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].innerHTML + "/" + dataToSend.cells[4].innerHTML + "/" + dataToSend.cells[5].innerHTML;
+                var uri2 = "http://18.133.86.241:8080/userDetails/update/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].innerHTML + "/" + dataToSend.cells[4].innerHTML + "/" + dataToSend.cells[5].innerHTML;
                 $.post(uri2, {},
                     function (data, status) {
                         if (status == "success") {
@@ -198,12 +198,12 @@ function createNewMobileUser(creatingUserId) {
 
     if (valid) {
         try {
-            var uri = "http://localhost:8081/mobileUsers/addNewUser/" + formTextElements[0] + "/" + formTextElements[1];
+            var uri = "http://18.133.86.241:8080/mobileUsers/addNewUser/" + formTextElements[0] + "/" + formTextElements[1];
             $.post(uri, {},
                 function (data, status) {
                     //console.log(data+"  "+status);
                     if (status == "success") {
-                        var uri2 = "http://localhost:8081/mobileUserDetails/addNewDetails/" + formTextElements[0] + "/" + formTextElements[2] + "/" + formTextElements[3] + "/" + mobileEmail + "/" + formTextElements[4] + "/" + creatingUserId + "/" + true;
+                        var uri2 = "http://18.133.86.241:8080/mobileUserDetails/addNewDetails/" + formTextElements[0] + "/" + formTextElements[2] + "/" + formTextElements[3] + "/" + mobileEmail + "/" + formTextElements[4] + "/" + creatingUserId + "/" + true;
                         $.post(uri2, {},
                             function (data, status) {
                                 //console.log(data+"  "+status);
@@ -271,7 +271,7 @@ function updateMobileUsersData() {
         var dataToSend = dataToUpdate[i];
         if (validation) {
             try {
-                var uri2 = "http://localhost:8081/mobileUserDetails/updateDetails/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[0].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].innerHTML + "/" + dataToSend.cells[4].innerHTML + "/" + dataToSend.cells[5].innerHTML + "/" + dataToSend.cells[6].childNodes[1].checked;
+                var uri2 = "http://18.133.86.241:8080/mobileUserDetails/updateDetails/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[0].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].innerHTML + "/" + dataToSend.cells[4].innerHTML + "/" + dataToSend.cells[5].innerHTML + "/" + dataToSend.cells[6].childNodes[1].checked;
                 $.post(uri2, {},
                     function (data, status) {
                         if (status == "success") {
@@ -314,7 +314,7 @@ function createNewStatusMessage() {
     if (validation) {
         try {
             //Used ajax as had issues with callback running in case of error
-            var uri2 = "http://localhost:8081/websiteStatus/createNewStatusMessage/" + elements[0].value + "/" + elements[1].value + "/" + active;
+            var uri2 = "http://18.133.86.241:8080/websiteStatus/createNewStatusMessage/" + elements[0].value + "/" + elements[1].value + "/" + active;
             $.ajax({
                 type: "POST",
                 url: uri2,
@@ -334,11 +334,11 @@ function createNewStatusMessage() {
         }
 
     }
-    if(validation){
-        setTimeout(function () {
-            window.location.reload();
-        }, 2000);
-    }
+    //if(validation){
+    //    setTimeout(function () {
+    //        window.location.reload();
+    //    }, 2000);
+    //}
 
 }
 
@@ -379,7 +379,7 @@ function updateStatusMsgData() {
         var dataToSend = statusDataToUpdate[i];
         if (validation) {
             try {
-                var uri2 = "http://localhost:8081/websiteStatus/updateWebStatusMessageStatus/" + dataToSend.cells[0].innerHTML + "/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].childNodes[1].checked;
+                var uri2 = "http://18.133.86.241:8080/websiteStatus/updateWebStatusMessageStatus/" + dataToSend.cells[0].innerHTML + "/" + dataToSend.cells[1].innerHTML + "/" + dataToSend.cells[2].innerHTML + "/" + dataToSend.cells[3].childNodes[1].checked;
                 console.log(uri2);
 
                 $.ajax({
@@ -415,7 +415,7 @@ function deleteStatusMessage(msgId, element) {
     console.log(msgId);
     console.log(element.closest('tr'));
     try {
-        var uri2 = "http://localhost:8081/websiteStatus/deleteStatusMessage/" + msgId;
+        var uri2 = "http://18.133.86.241:8080/websiteStatus/deleteStatusMessage/" + msgId;
         console.log(uri2);
         $.ajax({
             type: "POST",
@@ -448,7 +448,7 @@ function createNewWebContent(element) {
         } else { inputValue = inputs[i].value; }
         values.push(inputValue);
     }
-    var uriAddress = 'http://localhost:8081/webContent/addWebContent/'+values[0]+'/'+values[1]+'/'+values[2]+'/'+values[3]+'/'+values[4]+'/'+values[5]+'/'+values[6];
+    var uriAddress = 'http://18.133.86.241:8080/webContent/addWebContent/'+values[0]+'/'+values[1]+'/'+values[2]+'/'+values[3]+'/'+values[4]+'/'+values[5]+'/'+values[6];
     sendData(uriAddress,'POST', 'newWebContentModalBody', 'New web content saved!', 'An error occured, content was not saved!', 'operation error')
     setTimeout(function () {
         window.location.reload();
@@ -466,7 +466,7 @@ function collectUpdatedWebContentData(element){
 
 function deleteWebsiteContent(id, element){
     try {
-        var dwcurl ='http://localhost:8081/webContent/deleteWebsiteContent/'+id ;
+        var dwcurl ='http://18.133.86.241:8080/webContent/deleteWebsiteContent/'+id ;
         sendData(dwcurl, 'POST', 'manageWebsiteContentModayBody', 'Content deleted!', 'Operation failed!', 'Operation failed!');
     } catch (error) {
         console.log(error);
@@ -481,7 +481,7 @@ function updateWbContentData(){
     validation = validateTableRowArrayOfInputs(webContentDataToUpdate, [1,2,3,4,5,6], emailColumn = 'na', 0, 'manageWebsiteContentModayBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
     if(validation){
     for (let i = 0; i < webContentDataToUpdate.length; i++) {            
-        var uriAddress = 'http://localhost:8081/webContent/updateWebContent/'+webContentDataToUpdate[i].cells[0].innerHTML+'/'+webContentDataToUpdate[i].cells[1].innerHTML+
+        var uriAddress = 'http://18.133.86.241:8080/webContent/updateWebContent/'+webContentDataToUpdate[i].cells[0].innerHTML+'/'+webContentDataToUpdate[i].cells[1].innerHTML+
         '/'+webContentDataToUpdate[i].cells[2].innerHTML+'/'+webContentDataToUpdate[i].cells[3].innerHTML+'/'+webContentDataToUpdate[i].cells[4].innerHTML+
         '/'+webContentDataToUpdate[i].cells[5].innerHTML+'/'+webContentDataToUpdate[i].cells[6].innerHTML+'/'+webContentDataToUpdate[i].cells[7].childNodes[3].checked;
         sendData(uriAddress, 'POST', 'manageWebsiteContentModayBody', 'Webcontent updated!', 'Update failed!', 'Operation failed!');    
@@ -516,7 +516,7 @@ function createNewCard(element){
 
     if (values[4]=='') {values[4]='  ' }   // if no image provided , replace with '  '
 
-    var uriAddress = 'http://localhost:8081/websitecards/addNewCard/'+values[0]+'/'+values[1]+'/'+values[4]+'/'+values[2]+'/'+values[3]+'/'+values[5];
+    var uriAddress = 'http://18.133.86.241:8080/websitecards/addNewCard/'+values[0]+'/'+values[1]+'/'+values[4]+'/'+values[2]+'/'+values[3]+'/'+values[5];
     
     if(validation){
     sendData(uriAddress,'POST', 'newCardModalBody', 'New card saved!', 'An error occured, card was not saved!', 'Operation error!');
@@ -529,7 +529,7 @@ function createNewCard(element){
 
 function deleteCard(id, element){
     try {
-        var deleteCardUrl ='http://localhost:8081/websitecards/deleteCard/'+id ;
+        var deleteCardUrl ='http://18.133.86.241:8080/websitecards/deleteCard/'+id ;
         sendData(deleteCardUrl, 'POST', 'updateCardModalBody', 'Content deleted!', 'Operation failed!', 'Operation failed!');
     } catch (error) {
         console.log(error);
@@ -558,7 +558,7 @@ function updateCardData(){
     console.log(cardsToUpdate[0].cells[6].childNodes[1].checked);
    if(validation){
     for (let i = 0; i < cardsToUpdate.length; i++) {               
-        var uriAddress = 'http://localhost:8081/websitecards/updateCard/'+cardsToUpdate[i].cells[0].innerHTML+'/'+cardsToUpdate[i].cells[1].innerHTML+
+        var uriAddress = 'http://18.133.86.241:8080/websitecards/updateCard/'+cardsToUpdate[i].cells[0].innerHTML+'/'+cardsToUpdate[i].cells[1].innerHTML+
         '/'+cardsToUpdate[i].cells[2].innerHTML+'/'+cardsToUpdate[i].cells[3].innerHTML+'/'+cardsToUpdate[i].cells[4].innerHTML+
         '/'+cardsToUpdate[i].cells[5].innerHTML+'/'+cardsToUpdate[0].cells[6].childNodes[1].checked;
         sendData(uriAddress, 'POST', 'updateCardModalBody', 'Card updated!', 'Update failed!', 'Operation failed!');    
@@ -593,7 +593,7 @@ function createNewFaq(element){
     }
 
 
-    var uriAddress = 'http://localhost:8081/faq/addNewFaq/'+values[0]+'/'+values[1]+'/'+values[2]+'/'+values[3];
+    var uriAddress = 'http://18.133.86.241:8080/faq/addNewFaq/'+values[0]+'/'+values[1]+'/'+values[2]+'/'+values[3];
     //console.log(uriAddress);
     //console.log(validation);
     if(validation){
@@ -607,7 +607,7 @@ function createNewFaq(element){
 }
 
 function deleteFaq(id){
-    var uriAddress = 'http://localhost:8081/faq/deleteFaq/'+id;
+    var uriAddress = 'http://18.133.86.241:8080/faq/deleteFaq/'+id;
     sendData(uriAddress,'POST', 'updateFAQModalBody', 'Faq deleted!!', 'An error occured, faq was not deleted!', 'Operation error!');
     element.closest('tr').remove();
 }
@@ -625,7 +625,7 @@ function updateFaqData(){
     validation = validateTableRowArrayOfInputs(faqsToUpdate, [1,2,3,4], emailColumn = 'na', 3, 'updateFAQModalBody', 'Validation successfull!', 'Validation failed', 'Operation failed!');
     if(validation){
         for (let i = 0; i < faqsToUpdate.length; i++) {               
-            var uriAddress = 'http://localhost:8081/faq/updateFaq/'+faqsToUpdate[i].cells[0].innerHTML+'/'+faqsToUpdate[i].cells[1].innerHTML+
+            var uriAddress = 'http://18.133.86.241:8080/faq/updateFaq/'+faqsToUpdate[i].cells[0].innerHTML+'/'+faqsToUpdate[i].cells[1].innerHTML+
             '/'+faqsToUpdate[i].cells[2].innerHTML+'/'+faqsToUpdate[i].cells[3].innerHTML+'/'+faqsToUpdate[i].cells[4].childNodes[1].checked;            
             sendData(uriAddress, 'POST', 'updateFAQModalBody', 'FAQ updated!', 'Update failed!', 'Operation failed!');    
             }

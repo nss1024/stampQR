@@ -18,8 +18,7 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
   <!--JQuerry-->
-  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="http://localhost:8081"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.js" ></script>
   <!--Custom CSS-->
   <link href="css/customStyles.css" rel="stylesheet" />
 
@@ -663,7 +662,7 @@
   <!--Modal -- Manage Mobile users  -->
   <div class="modal fade bd-example-modal-lg" id="manageMobileUserModal" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Manage mobile users</h1>
@@ -789,9 +788,9 @@
       var statusTitle = document.getElementById("statusTitle").value;
       var statusMessage = document.getElementById("statusMessage").value;
       var statusActive = document.getElementById("statusActive").value;
-      console.log("http://localhost:8081//websiteStatus/createNewStatusMessage/" + statusTitle + "/" + statusMessage + "/" + statusActive);
+      console.log("http://18.133.86.241:8080//websiteStatus/createNewStatusMessage/" + statusTitle + "/" + statusMessage + "/" + statusActive);
 
-      $.get("http://localhost:8081//websiteStatus/createNewStatusMessage/Status2/Status2msg/true", {},
+      $.get("http://18.133.86.241:8080//websiteStatus/createNewStatusMessage/Status2/Status2msg/true", {},
         function () {
           alert("New status message created!");
         });
