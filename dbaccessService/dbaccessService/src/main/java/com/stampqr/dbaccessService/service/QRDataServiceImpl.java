@@ -69,9 +69,10 @@ public class QRDataServiceImpl implements QRDataService{
         List<QRData> result = new ArrayList<>();
         List<QRData> retrievedQRData = qrDataRepository.findAllByUserIdAndActiveOrderByCreateDateDesc(userId,Boolean.TRUE);
 
-        if(retrievedQRData!=null&retrievedQRData.size()>=3){
-            for (int i = 0; i < 3; i++) {
+        if(retrievedQRData!=null&retrievedQRData.size()>=0){
+            for (int i = 0; i < retrievedQRData.size(); i++) {
                 result.add(retrievedQRData.get(i));
+                if(i==2)break;
             }
         }
 

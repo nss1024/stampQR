@@ -26,6 +26,16 @@ public class MainController {
 
         String qruri = "http://10.0.1.126:8081/qrData/getCodesForMobileUser/"+username;
         QRDataList qrDataList = restTemplate.getForObject(qruri, QRDataList.class);
+        return  qrDataList;
+
+    }
+
+    @GetMapping(value ="/api/v1/getNumDataByUser/{username}")
+    public QRDataList getNumQRData(@PathVariable("username") String username){
+
+
+        String qruri = "http://10.0.1.126:8081/qrData/getCodesForMobileUser/"+username;
+        QRDataList qrDataList = restTemplate.getForObject(qruri, QRDataList.class);
 
         if(Objects.nonNull(qrDataList)) {
             for (QRData qrd : qrDataList.getQrDataList()) {

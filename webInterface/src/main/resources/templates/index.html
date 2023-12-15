@@ -37,7 +37,14 @@
                             <div th:if="${isAdmin}">
                                 <li class="nav-item"><a class="nav-link" th:href="@{admin}">Admin</a></li>
                             </div>
-                            <li class="nav-item"><a class="nav-link" th:href="@{userLoggedIn} ? login : logout" th:text="${userLoggedIn} ? 'Sign out':'Login'">Option</a></li>
+                            <div th:if="${userLoggedIn}">
+                                <li class="nav-item"><a class="nav-link" th:href="@{logout}">Sign Out</a></li>
+                            </div>
+                            <div th:if="${!userLoggedIn}">
+                                <li class="nav-item"><a class="nav-link" th:href="@{login}">Sign in</a></li>
+                            </div>
+
+
                         </ul>
                         </li>
                         </ul>

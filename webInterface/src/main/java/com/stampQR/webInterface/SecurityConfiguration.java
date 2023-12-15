@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +37,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/faq").permitAll();
                     auth.requestMatchers("/about").permitAll();
                     auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("/logout").permitAll();
                     auth.requestMatchers("/admin").hasAuthority("ADMINISTRATOR");
                     auth.anyRequest().authenticated();
                 })

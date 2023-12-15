@@ -10,23 +10,30 @@ public class NumGCode {
 
 
     public void generateNumericGCode(String gCodeArray[]){
-        float result[] = new float[1000];
+        float result[] = new float[50000];
+        int valueCounter = 1;
 
         for (int i=0;i<gCodeArray.length;i++){
                 String s = gCodeArray[i];
                 //System.out.println(s);
                 switch (s.charAt(0)){
                     case'X':
+                        valueCounter++;
                         result[i]=(float)1000+Float.valueOf(s.substring(1));
                         //System.out.println(result[i]);
                         break;
-                    case'Y':result[i]=(float)2000+Float.valueOf(s.substring(1));
+                    case'Y':
+                        valueCounter++;
+                        result[i]=(float)2000+Float.valueOf(s.substring(1));
                         //System.out.println(result[i]);
                         break;
-                    case'Z':result[i]=(float)3000+ Math.abs(Float.valueOf(s.substring(1)));
+                    case'Z':
+                        valueCounter++;
+                        result[i]=(float)3000+ Math.abs(Float.valueOf(s.substring(1)));
                         //System.out.println(result[i]);
                         break;
                     case'G':
+                        valueCounter++;
                         if(s.equals("G21")){
                         result[i]=(float)921;
                         //System.out.println(result[i]);
@@ -37,8 +44,12 @@ public class NumGCode {
                 }
 
         }
+        float [] returnArray = new float[valueCounter];
+        for (int i = 0; i < valueCounter; i++) {
+            returnArray[i]=result[i];
+        }
 
-        numericGCode = result;
+        numericGCode = returnArray;
     }
 
     public float[] getNumbericGCode(){

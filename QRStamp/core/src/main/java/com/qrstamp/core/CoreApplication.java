@@ -58,7 +58,7 @@ public class CoreApplication {
 			qrRequestresponseObject = createQR.getResponseData();
 			qrRequestresponseObject.setEncodedText(createGcode.generateGCode(qrRequestresponseObject.getEncodedText(), 1.0, 2.0));
 
-			String uri = "http://10.0.1.126:8081/qrdata/save/" + qrRequestresponseObject.getTextToEncode() + "/" + qrRequestresponseObject.getEncodedText() + "/" + errorCorrectionLevel + "/" +
+			String uri = "http://localhost:8081/qrdata/save/" + qrRequestresponseObject.getTextToEncode() + "/" + qrRequestresponseObject.getEncodedText() + "/" + errorCorrectionLevel + "/" +
 					tag + "/" + qrRequestresponseObject.getImg() + "/" + qrRequestresponseObject.getVersion() + "/" + userId + "/" + "true";
 
 			System.out.println(uri);
@@ -100,7 +100,7 @@ public class CoreApplication {
 			qrRequestresponseObject = createQR.getResponseData();
 			qrRequestresponseObject.setEncodedText(createGcode.generateGCode(qrRequestresponseObject.getEncodedText(), stampConfig.getPixelDistance(), stampConfig.getStampHeight()));
 			qrRequestresponseObject.setError(errorCorrectionLevel);
-			String uri = "http://10.0.1.126:8081/qrdata/save2/" + tag + "/" + userId + "/" + true;
+			String uri = "http://localhost:8081/qrdata/save2/" + tag + "/" + userId + "/" + true;
 			restTemplate.postForEntity(uri, qrRequestresponseObject, Object.class);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch (Exception e){

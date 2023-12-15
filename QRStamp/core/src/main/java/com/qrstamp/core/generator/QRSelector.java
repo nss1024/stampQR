@@ -40,12 +40,12 @@ private Map<Integer, Integer> H_CODES = new HashMap<>();
         for(Integer i : sortedList){ // iterate through the max test sizes and get the first one that is equal to or greater than the size of the text to be encoded
             if(i>=txtSize){
                 key = i;
-                System.out.println("Selected size is: "+key);
+                //System.out.println("Selected size is: "+key);
                 break;
             }
         }
         result = codes.get(key);
-        System.out.println("QR Code version to use is: "+result);
+        //System.out.println("QR Code version to use is: "+result);
         return result;
     }
 

@@ -26,7 +26,12 @@
                             <li class="nav-item"><a class="nav-link" th:href="@{about}">About</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{contact}">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" th:href="@{faq}">FAQ</a></li>
-                            <li class="nav-item"><a class="nav-link" th:href="@{userLoggedIn} ? login : logout" th:text="${userLoggedIn} ? 'Sign out':'Login'">Option</a></li>
+                            <div th:if="${userLoggedIn}">
+                                <li class="nav-item"><a class="nav-link" th:href="@{logout}">Sign Out</a></li>
+                            </div>
+                            <div th:if="${!userLoggedIn}">
+                                <li class="nav-item"><a class="nav-link" th:href="@{login}">Sign in</a></li>
+                            </div>
                                 </ul>
                             </li>
                         </ul>

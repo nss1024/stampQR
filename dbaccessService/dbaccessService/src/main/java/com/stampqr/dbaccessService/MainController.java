@@ -440,6 +440,13 @@ public class MainController {
     }
     @GetMapping(value="stampConfig/getStampConfig/{id}")
     public StampConfig getStampConfig(@PathVariable(name="id") Long id){
+        StampConfig sc = null;
+        try{
+            sc=stampConfigService.getStampConfig(id);
+        }catch(Exception e){
+            System.out.println("Error retrieving stamp config data, data may not be present!");
+        }
+
         return stampConfigService.getStampConfig(id);
     }
 
