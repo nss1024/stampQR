@@ -90,7 +90,7 @@ public class ProcessData extends AppCompatActivity {
         String [] dataChunksArray = encodedText.split("\n");
 
         for (String s: dataChunksArray) {
-            stringQueue.add(s+";");
+                stringQueue.add(s + ";");
         }
 
         connectBtn.setOnClickListener(new View.OnClickListener() {
